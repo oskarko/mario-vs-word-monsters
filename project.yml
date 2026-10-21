@@ -1,0 +1,42 @@
+name: MarioMonsters
+
+options:
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+  xcodeVersion: "26.0"
+
+targets:
+  MarioMonsters:
+    type: application
+    platform: iOS
+    sources:
+      - path: MarioMonsters
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.oscargarrucho.MarioMonsters
+        PRODUCT_NAME: MarioMonsters
+        SWIFT_VERSION: 6.0
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_KEY_CFBundleDisplayName: "Mario vs 👾"
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.education
+        INFOPLIST_KEY_UILaunchScreen_Generation: true
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: Mario usa el micrófono para decir las frases en inglés en voz alta.
+        INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: El reconocimiento de voz comprueba que Mario pronuncia bien la frase. Funciona en el propio dispositivo.
+
+  MarioMonstersTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: MarioMonstersTests
+    dependencies:
+      - target: MarioMonsters
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.oscargarrucho.MarioMonstersTests
+        SWIFT_VERSION: 6.0
+        GENERATE_INFOPLIST_FILE: YES

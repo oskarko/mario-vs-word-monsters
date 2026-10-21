@@ -1,0 +1,576 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		006EA7C1EED56A86A85425EB /* MonsterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A638FE3D000181571AF83A57 /* MonsterView.swift */; };
+		0140BD2D73DF540D2692B7A5 /* SpellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008D48338828EE53955DF2DA /* SpellView.swift */; };
+		10623EC2BAC2F57AF0B4BEAF /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F3DBCD9F53F6A5F880CC2D /* SessionView.swift */; };
+		143811E5652B65D970BDFBF5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA7C65299E28A2AE28A505C /* HomeView.swift */; };
+		1CEBD47DCDC780011D3311E7 /* SpeechListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64321B77EDD65763120B334C /* SpeechListener.swift */; };
+		1E43C0891B4D895DFF0ADCCD /* SessionPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82299B5F6258C98F3E272F3D /* SessionPlanner.swift */; };
+		2A670382FA63A8CC78011215 /* ParentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6E8BC82A2F1BF59FC63A81 /* ParentViews.swift */; };
+		5AB94D303F4C9F87F54FC51F /* AnswerChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5868CBF55868A5D5C7EE6A1B /* AnswerChecker.swift */; };
+		6A5C0C2BF3C391A90233DBE6 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DF5647FFEB4A2838723458 /* Speaker.swift */; };
+		6C953590FDCC42C56F089943 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C2DE1D7FD3A7534E5F9981 /* Settings.swift */; };
+		7B77E93EDD7E173A81A6FC22 /* ExerciseComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F76787B10B2359ECD952DB3 /* ExerciseComponents.swift */; };
+		878568809F95B0066EB8ED05 /* EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF5C719FD3500131943993 /* EngineTests.swift */; };
+		89B1A1022326E9133C71D94B /* BuildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AC1E95C84E72FDA5A8F82B /* BuildView.swift */; };
+		91D5DE0041ECE2574B558287 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0B239161F56DB94CD6ACB2 /* Theme.swift */; };
+		9305A14D824319390CAACC68 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC3E8DCDEAE355DE0FC84DF /* Persistence.swift */; };
+		939F9D492EBA8AFCDF11FEC8 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05100AD5C73261879A92078 /* Exercise.swift */; };
+		97657234638358E97683DE80 /* PaperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8923593D7DC0FB1DFF7645 /* PaperView.swift */; };
+		AEAEFE17AF9DC3A78A95D1D1 /* SayItView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCF6AE52EDFD5E51C6E2C40 /* SayItView.swift */; };
+		B9E0F99583155FCF845F5908 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB5E068105FF6DC6F838764 /* FlowLayout.swift */; };
+		BCAC0477F972CDD662A390C3 /* ListenChooseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C449F1E8957B03088B47689 /* ListenChooseView.swift */; };
+		D1024E3501576605A14C56CB /* MarioMonstersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236C0429A118BEF3D71E1028 /* MarioMonstersApp.swift */; };
+		DD05F9992B7C6866B347D756 /* ProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003B79AF136C4FC92EF111 /* ProgressStore.swift */; };
+		DE12361DC91D5D40FFBBE3B6 /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A823E2157F1EA06EAFB1A /* Content.swift */; };
+		E17E870847DBCF9AD69CD9EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66A31945E68F96A4651652AF /* Assets.xcassets */; };
+		F20CAA800254A12C228FC787 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A74EFDE9293EFEFE08694A /* Scheduler.swift */; };
+		F4A0C041A653EABBEA216A6B /* SessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933337F19A30F8E2382C696 /* SessionModel.swift */; };
+		F57BD3E6F342A72DBF6F6C16 /* Curriculum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F965CCF2F833C6E77B8984D3 /* Curriculum.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		755BFF29B09598536363C082 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E095BCFC74EE4073113B1D6C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 726690ABAEEA333A48DE6017;
+			remoteInfo = MarioMonsters;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		008D48338828EE53955DF2DA /* SpellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellView.swift; sourceTree = "<group>"; };
+		0933337F19A30F8E2382C696 /* SessionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionModel.swift; sourceTree = "<group>"; };
+		1CA7C65299E28A2AE28A505C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		1CCF6AE52EDFD5E51C6E2C40 /* SayItView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SayItView.swift; sourceTree = "<group>"; };
+		236C0429A118BEF3D71E1028 /* MarioMonstersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarioMonstersApp.swift; sourceTree = "<group>"; };
+		24AC1E95C84E72FDA5A8F82B /* BuildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildView.swift; sourceTree = "<group>"; };
+		2C097C7ADB0C1CE03EECD3B6 /* MarioMonsters.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MarioMonsters.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		32F3DBCD9F53F6A5F880CC2D /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
+		3AB5E068105FF6DC6F838764 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
+		4C4A823E2157F1EA06EAFB1A /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
+		5868CBF55868A5D5C7EE6A1B /* AnswerChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerChecker.swift; sourceTree = "<group>"; };
+		64321B77EDD65763120B334C /* SpeechListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechListener.swift; sourceTree = "<group>"; };
+		66A31945E68F96A4651652AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		66DF5C719FD3500131943993 /* EngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
+		6F76787B10B2359ECD952DB3 /* ExerciseComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseComponents.swift; sourceTree = "<group>"; };
+		76003B79AF136C4FC92EF111 /* ProgressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStore.swift; sourceTree = "<group>"; };
+		7E53E2446F5DE6941D236897 /* MarioMonstersTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MarioMonstersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EC3E8DCDEAE355DE0FC84DF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		82299B5F6258C98F3E272F3D /* SessionPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPlanner.swift; sourceTree = "<group>"; };
+		85A74EFDE9293EFEFE08694A /* Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+		8A6E8BC82A2F1BF59FC63A81 /* ParentViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentViews.swift; sourceTree = "<group>"; };
+		9A0B239161F56DB94CD6ACB2 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		9C449F1E8957B03088B47689 /* ListenChooseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenChooseView.swift; sourceTree = "<group>"; };
+		A638FE3D000181571AF83A57 /* MonsterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterView.swift; sourceTree = "<group>"; };
+		B0DF5647FFEB4A2838723458 /* Speaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speaker.swift; sourceTree = "<group>"; };
+		D05100AD5C73261879A92078 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		E3C2DE1D7FD3A7534E5F9981 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		F965CCF2F833C6E77B8984D3 /* Curriculum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curriculum.swift; sourceTree = "<group>"; };
+		FD8923593D7DC0FB1DFF7645 /* PaperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		17C9493E56F2EC5878C16A4A /* Exercises */ = {
+			isa = PBXGroup;
+			children = (
+				24AC1E95C84E72FDA5A8F82B /* BuildView.swift */,
+				6F76787B10B2359ECD952DB3 /* ExerciseComponents.swift */,
+				9C449F1E8957B03088B47689 /* ListenChooseView.swift */,
+				FD8923593D7DC0FB1DFF7645 /* PaperView.swift */,
+				1CCF6AE52EDFD5E51C6E2C40 /* SayItView.swift */,
+				008D48338828EE53955DF2DA /* SpellView.swift */,
+			);
+			path = Exercises;
+			sourceTree = "<group>";
+		};
+		3EC50BE64C25999BC504A68F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1CA7C65299E28A2AE28A505C /* HomeView.swift */,
+				32F3DBCD9F53F6A5F880CC2D /* SessionView.swift */,
+				8BCFA57550306446184DA037 /* Components */,
+				17C9493E56F2EC5878C16A4A /* Exercises */,
+				986D11835971901473A98BF6 /* Parent */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5494820830B80083B9E2C69A /* MarioMonstersTests */ = {
+			isa = PBXGroup;
+			children = (
+				66DF5C719FD3500131943993 /* EngineTests.swift */,
+			);
+			path = MarioMonstersTests;
+			sourceTree = "<group>";
+		};
+		5B8CEDF1F470207B85A3704E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2C097C7ADB0C1CE03EECD3B6 /* MarioMonsters.app */,
+				7E53E2446F5DE6941D236897 /* MarioMonstersTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5ED4AD6A61DED7456B7DDD2B /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				5868CBF55868A5D5C7EE6A1B /* AnswerChecker.swift */,
+				D05100AD5C73261879A92078 /* Exercise.swift */,
+				76003B79AF136C4FC92EF111 /* ProgressStore.swift */,
+				85A74EFDE9293EFEFE08694A /* Scheduler.swift */,
+				0933337F19A30F8E2382C696 /* SessionModel.swift */,
+				82299B5F6258C98F3E272F3D /* SessionPlanner.swift */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		65AD2BE1D879A0D0873D13A0 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				236C0429A118BEF3D71E1028 /* MarioMonstersApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		8BCFA57550306446184DA037 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				3AB5E068105FF6DC6F838764 /* FlowLayout.swift */,
+				A638FE3D000181571AF83A57 /* MonsterView.swift */,
+				9A0B239161F56DB94CD6ACB2 /* Theme.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		953AE653DA72C3A24B18B815 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E3C2DE1D7FD3A7534E5F9981 /* Settings.swift */,
+				B0DF5647FFEB4A2838723458 /* Speaker.swift */,
+				64321B77EDD65763120B334C /* SpeechListener.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		986D11835971901473A98BF6 /* Parent */ = {
+			isa = PBXGroup;
+			children = (
+				8A6E8BC82A2F1BF59FC63A81 /* ParentViews.swift */,
+			);
+			path = Parent;
+			sourceTree = "<group>";
+		};
+		9E0731564CD5CC2F83110972 = {
+			isa = PBXGroup;
+			children = (
+				F65B998763B266C66D074A82 /* MarioMonsters */,
+				5494820830B80083B9E2C69A /* MarioMonstersTests */,
+				5B8CEDF1F470207B85A3704E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E435A5733D1167AF6596AC4D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4C4A823E2157F1EA06EAFB1A /* Content.swift */,
+				F965CCF2F833C6E77B8984D3 /* Curriculum.swift */,
+				7EC3E8DCDEAE355DE0FC84DF /* Persistence.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F65B998763B266C66D074A82 /* MarioMonsters */ = {
+			isa = PBXGroup;
+			children = (
+				66A31945E68F96A4651652AF /* Assets.xcassets */,
+				65AD2BE1D879A0D0873D13A0 /* App */,
+				5ED4AD6A61DED7456B7DDD2B /* Engine */,
+				E435A5733D1167AF6596AC4D /* Model */,
+				953AE653DA72C3A24B18B815 /* Services */,
+				3EC50BE64C25999BC504A68F /* Views */,
+			);
+			path = MarioMonsters;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		726690ABAEEA333A48DE6017 /* MarioMonsters */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACDB8885C284162C275FAEBF /* Build configuration list for PBXNativeTarget "MarioMonsters" */;
+			buildPhases = (
+				49A9C5A6B33AC22390174F48 /* Sources */,
+				FE9B46CB330DBFF73D3C3091 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MarioMonsters;
+			packageProductDependencies = (
+			);
+			productName = MarioMonsters;
+			productReference = 2C097C7ADB0C1CE03EECD3B6 /* MarioMonsters.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7D349B5151B728CE7920BA2C /* MarioMonstersTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 319DB0319EE2072BB5A378C1 /* Build configuration list for PBXNativeTarget "MarioMonstersTests" */;
+			buildPhases = (
+				5BF569B6A2C138B1810B0D6A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5FA0AA624E33941B4C8C5F27 /* PBXTargetDependency */,
+			);
+			name = MarioMonstersTests;
+			packageProductDependencies = (
+			);
+			productName = MarioMonstersTests;
+			productReference = 7E53E2446F5DE6941D236897 /* MarioMonstersTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E095BCFC74EE4073113B1D6C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = E08747EE7299D64A8CDBD3C5 /* Build configuration list for PBXProject "MarioMonsters" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 9E0731564CD5CC2F83110972;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 5B8CEDF1F470207B85A3704E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				726690ABAEEA333A48DE6017 /* MarioMonsters */,
+				7D349B5151B728CE7920BA2C /* MarioMonstersTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FE9B46CB330DBFF73D3C3091 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E17E870847DBCF9AD69CD9EC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		49A9C5A6B33AC22390174F48 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AB94D303F4C9F87F54FC51F /* AnswerChecker.swift in Sources */,
+				89B1A1022326E9133C71D94B /* BuildView.swift in Sources */,
+				DE12361DC91D5D40FFBBE3B6 /* Content.swift in Sources */,
+				F57BD3E6F342A72DBF6F6C16 /* Curriculum.swift in Sources */,
+				939F9D492EBA8AFCDF11FEC8 /* Exercise.swift in Sources */,
+				7B77E93EDD7E173A81A6FC22 /* ExerciseComponents.swift in Sources */,
+				B9E0F99583155FCF845F5908 /* FlowLayout.swift in Sources */,
+				143811E5652B65D970BDFBF5 /* HomeView.swift in Sources */,
+				BCAC0477F972CDD662A390C3 /* ListenChooseView.swift in Sources */,
+				D1024E3501576605A14C56CB /* MarioMonstersApp.swift in Sources */,
+				006EA7C1EED56A86A85425EB /* MonsterView.swift in Sources */,
+				97657234638358E97683DE80 /* PaperView.swift in Sources */,
+				2A670382FA63A8CC78011215 /* ParentViews.swift in Sources */,
+				9305A14D824319390CAACC68 /* Persistence.swift in Sources */,
+				DD05F9992B7C6866B347D756 /* ProgressStore.swift in Sources */,
+				AEAEFE17AF9DC3A78A95D1D1 /* SayItView.swift in Sources */,
+				F20CAA800254A12C228FC787 /* Scheduler.swift in Sources */,
+				F4A0C041A653EABBEA216A6B /* SessionModel.swift in Sources */,
+				1E43C0891B4D895DFF0ADCCD /* SessionPlanner.swift in Sources */,
+				10623EC2BAC2F57AF0B4BEAF /* SessionView.swift in Sources */,
+				6C953590FDCC42C56F089943 /* Settings.swift in Sources */,
+				6A5C0C2BF3C391A90233DBE6 /* Speaker.swift in Sources */,
+				1CEBD47DCDC780011D3311E7 /* SpeechListener.swift in Sources */,
+				0140BD2D73DF540D2692B7A5 /* SpellView.swift in Sources */,
+				91D5DE0041ECE2574B558287 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BF569B6A2C138B1810B0D6A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				878568809F95B0066EB8ED05 /* EngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5FA0AA624E33941B4C8C5F27 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 726690ABAEEA333A48DE6017 /* MarioMonsters */;
+			targetProxy = 755BFF29B09598536363C082 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		24DF13349F353DFB0BA67F99 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.oscargarrucho.MarioMonstersTests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MarioMonsters.app/MarioMonsters";
+			};
+			name = Release;
+		};
+		3D81D93464DAABE8BE0C6E88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.oscargarrucho.MarioMonstersTests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MarioMonsters.app/MarioMonsters";
+			};
+			name = Debug;
+		};
+		9BC6CE1D38B6045442D4B19F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Mario vs 👾";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Mario usa el micrófono para decir las frases en inglés en voz alta.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "El reconocimiento de voz comprueba que Mario pronuncia bien la frase. Funciona en el propio dispositivo.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.oscargarrucho.MarioMonsters;
+				PRODUCT_NAME = MarioMonsters;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AB942E6601F3A7C89C6BFF9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		EB65DE3AF1E12D1372ED2219 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F2FF4D679776EEEC04535F00 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Mario vs 👾";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Mario usa el micrófono para decir las frases en inglés en voz alta.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "El reconocimiento de voz comprueba que Mario pronuncia bien la frase. Funciona en el propio dispositivo.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.oscargarrucho.MarioMonsters;
+				PRODUCT_NAME = MarioMonsters;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		319DB0319EE2072BB5A378C1 /* Build configuration list for PBXNativeTarget "MarioMonstersTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D81D93464DAABE8BE0C6E88 /* Debug */,
+				24DF13349F353DFB0BA67F99 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		ACDB8885C284162C275FAEBF /* Build configuration list for PBXNativeTarget "MarioMonsters" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2FF4D679776EEEC04535F00 /* Debug */,
+				9BC6CE1D38B6045442D4B19F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E08747EE7299D64A8CDBD3C5 /* Build configuration list for PBXProject "MarioMonsters" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB65DE3AF1E12D1372ED2219 /* Debug */,
+				AB942E6601F3A7C89C6BFF9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E095BCFC74EE4073113B1D6C /* Project object */;
+}
