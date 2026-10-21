@@ -222,6 +222,7 @@ struct ParentSettingsView: View {
     @AppStorage(SettingsKey.parentPIN) private var pin = ""
     @AppStorage(SettingsKey.enabledMonsters) private var enabledRaw = MonsterSelection.defaultRaw
     @State private var confirmReset = false
+    @State private var showVoiceSetup = false
     private let voices = Speaker.voices(for: "en")
 
     var body: some View {
@@ -240,6 +241,9 @@ struct ParentSettingsView: View {
                     ForEach(voices, id: \.identifier) { Text(Self.label($0)).tag($0.identifier) }
                 }
                 .onChange(of: englishVoice) { Speaker.shared.english("She has got curly hair.") }
+                Button(Speaker.hasClearEnglishVoice ? "Voz clara descargada ✓" : "Descargar una voz más clara…") {
+                    showVoiceSetup = true
+                }
                 VStack(alignment: .leading) {
                     Text("Velocidad del inglés")
                     Slider(value: $speechRate, in: 0.3...0.55)
@@ -250,7 +254,7 @@ struct ParentSettingsView: View {
             } header: {
                 Text("Voz")
             } footer: {
-                Text("Para una voz más clara, descarga una voz «mejorada» en Ajustes del iPhone/iPad → Accesibilidad → Contenido leído → Voces → Inglés (por ejemplo Serena o Kate, de Reino Unido). Después elígela aquí o déjala en Automática.")
+                Text("En Automática se usa la voz más clara que haya descargada.")
             }
             Section {
                 NavigationLink {
@@ -267,6 +271,7 @@ struct ParentSettingsView: View {
             }
         }
         .navigationTitle("Ajustes")
+        .sheet(isPresented: $showVoiceSetup) { VoiceSetupView() }
         .confirmationDialog("¿Borrar todo el progreso de \(childName)?", isPresented: $confirmReset, titleVisibility: .visible) {
             Button("Borrar", role: .destructive) { ProgressStore(context: context).resetAll() }
         } message: {

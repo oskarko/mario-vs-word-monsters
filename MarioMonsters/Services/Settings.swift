@@ -10,6 +10,7 @@ enum SettingsKey {
     static let enabledMonsters = "enabledMonsters"
     /// Identifier of the English voice chosen in the parent area; empty means automatic.
     static let englishVoice = "englishVoice"
+    static let voiceSetupDismissed = "voiceSetupDismissed"
 
     static let defaultSpeechRate = 0.42
 }

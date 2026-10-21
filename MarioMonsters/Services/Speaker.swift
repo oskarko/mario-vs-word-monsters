@@ -13,7 +13,11 @@ final class Speaker {
         let chosen = UserDefaults.standard.string(forKey: SettingsKey.englishVoice) ?? ""
         return AVSpeechSynthesisVoice(identifier: chosen) ?? Self.automaticEnglishVoice
     }
-    static let automaticEnglishVoice = bestVoice(for: "en")
+    /// Not cached: a voice downloaded while the app is open should be picked up straight away.
+    static var automaticEnglishVoice: AVSpeechSynthesisVoice? { bestVoice(for: "en") }
+
+    /// The built-in compact voices mispronounce some short words; enhanced and premium ones don't.
+    static var hasClearEnglishVoice: Bool { voices(for: "en").contains { $0.quality != .default } }
 
     // Slow mode renders the speech to audio and time-stretches it, because the higher-quality
     // voices largely ignore `AVSpeechUtterance.rate`, so a lower rate alone sounded identical.

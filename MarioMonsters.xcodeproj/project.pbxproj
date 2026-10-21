@@ -33,6 +33,7 @@
 		D1024E3501576605A14C56CB /* MarioMonstersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236C0429A118BEF3D71E1028 /* MarioMonstersApp.swift */; };
 		DD05F9992B7C6866B347D756 /* ProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003B79AF136C4FC92EF111 /* ProgressStore.swift */; };
 		DE12361DC91D5D40FFBBE3B6 /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A823E2157F1EA06EAFB1A /* Content.swift */; };
+		E0CAF4F9A062F391D06B4A98 /* VoiceSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECEFA9035139FA91EC2BD6F /* VoiceSetupView.swift */; };
 		E17E870847DBCF9AD69CD9EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66A31945E68F96A4651652AF /* Assets.xcassets */; };
 		F20CAA800254A12C228FC787 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A74EFDE9293EFEFE08694A /* Scheduler.swift */; };
 		F4A0C041A653EABBEA216A6B /* SessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933337F19A30F8E2382C696 /* SessionModel.swift */; };
@@ -54,6 +55,7 @@
 		0933337F19A30F8E2382C696 /* SessionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionModel.swift; sourceTree = "<group>"; };
 		1CA7C65299E28A2AE28A505C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1CCF6AE52EDFD5E51C6E2C40 /* SayItView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SayItView.swift; sourceTree = "<group>"; };
+		1ECEFA9035139FA91EC2BD6F /* VoiceSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSetupView.swift; sourceTree = "<group>"; };
 		236C0429A118BEF3D71E1028 /* MarioMonstersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarioMonstersApp.swift; sourceTree = "<group>"; };
 		24AC1E95C84E72FDA5A8F82B /* BuildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildView.swift; sourceTree = "<group>"; };
 		2C097C7ADB0C1CE03EECD3B6 /* MarioMonsters.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MarioMonsters.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				8A6E8BC82A2F1BF59FC63A81 /* ParentViews.swift */,
+				1ECEFA9035139FA91EC2BD6F /* VoiceSetupView.swift */,
 			);
 			path = Parent;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				0140BD2D73DF540D2692B7A5 /* SpellView.swift in Sources */,
 				8E5533EE7F64BA6DBFFDF7B1 /* SpokenSpanish.swift in Sources */,
 				91D5DE0041ECE2574B558287 /* Theme.swift in Sources */,
+				E0CAF4F9A062F391D06B4A98 /* VoiceSetupView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

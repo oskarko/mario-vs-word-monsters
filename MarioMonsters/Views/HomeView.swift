@@ -9,9 +9,11 @@ struct HomeView: View {
     @AppStorage(SettingsKey.sessionLength) private var sessionLength = 10
     @AppStorage(SettingsKey.speechEnabled) private var speechEnabled = true
     @AppStorage(SettingsKey.enabledMonsters) private var enabledRaw = MonsterSelection.defaultRaw
+    @AppStorage(SettingsKey.voiceSetupDismissed) private var voiceSetupDismissed = false
 
     @State private var session: SessionModel?
     @State private var showParent = false
+    @State private var showVoiceSetup = false
 
     private var boxes: [String: Int] {
         Dictionary(progress.map { ($0.cardID, $0.box) }, uniquingKeysWith: { a, _ in a })
@@ -57,6 +59,14 @@ struct HomeView: View {
         }
         .sheet(isPresented: $showParent) {
             ParentGateView()
+        }
+        .sheet(isPresented: $showVoiceSetup) {
+            VoiceSetupView()
+        }
+        .task {
+            guard !voiceSetupDismissed, !Speaker.hasClearEnglishVoice,
+                  !UserDefaults.standard.bool(forKey: "autostart") else { return }
+            showVoiceSetup = true
         }
         #if DEBUG
         .task { debugAutostart() }
