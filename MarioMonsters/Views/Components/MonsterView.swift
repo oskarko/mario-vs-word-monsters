@@ -44,6 +44,18 @@ struct MonsterView: View {
 
     private var unit: CGFloat { size / 100 }
 
+    private enum Feature { case horns, antennae, spikes, hat, none }
+
+    private var eyeCount: Int {
+        if monster == .ae { return 1 }
+        if monster.isOriginal { return 2 }
+        return [2, 3, 1][monster.index % 3]
+    }
+
+    private var feature: Feature {
+        [.horns, .antennae, .spikes, .hat, .none][monster.index % 5]
+    }
+
     private func body(color: Color) -> some View {
         Ellipse()
             .fill(
@@ -57,9 +69,10 @@ struct MonsterView: View {
     private var face: some View {
         VStack(spacing: 6 * unit) {
             HStack(spacing: 10 * unit) {
-                if monster == .ae {
-                    eye(width: 30)
-                } else {
+                switch eyeCount {
+                case 1: eye(width: 30)
+                case 3: ForEach(0..<3, id: \.self) { _ in eye(width: 16) }
+                default:
                     eye(width: 20)
                     eye(width: 20)
                 }
@@ -158,8 +171,66 @@ struct MonsterView: View {
             }
             .rotationEffect(.degrees(-12))
             .offset(x: 10 * unit, y: -30 * unit)
-        default:
+        case _ where monster.isOriginal:
             EmptyView()
+        default:
+            generated(behind: behind, dark: dark)
+        }
+    }
+
+    @ViewBuilder
+    private func generated(behind: Bool, dark: Color) -> some View {
+        if behind {
+            switch feature {
+            case .horns:
+                ForEach([-1.0, 1.0], id: \.self) { side in
+                    Triangle()
+                        .fill(dark)
+                        .frame(width: 12 * unit, height: 22 * unit)
+                        .rotationEffect(.degrees(side * 25))
+                        .offset(x: side * 24 * unit, y: -30 * unit)
+                }
+            case .antennae:
+                ForEach([-1.0, 1.0], id: \.self) { side in
+                    VStack(spacing: 0) {
+                        Circle().fill(monster.color.mix(with: .white, by: 0.5)).frame(width: 10 * unit)
+                        Rectangle().fill(dark).frame(width: 3 * unit, height: 20 * unit)
+                    }
+                    .rotationEffect(.degrees(side * 25))
+                    .offset(x: side * 20 * unit, y: -34 * unit)
+                }
+            case .spikes:
+                ForEach(0..<3) { index in
+                    Triangle()
+                        .fill(dark)
+                        .frame(width: 14 * unit, height: 16 * unit)
+                        .offset(y: -36 * unit)
+                        .rotationEffect(.degrees(Double(index - 1) * 30))
+                        .offset(y: 10 * unit)
+                }
+            case .hat, .none:
+                EmptyView()
+            }
+        } else {
+            ZStack {
+                if feature == .hat {
+                    VStack(spacing: 0) {
+                        Capsule().fill(dark).frame(width: 30 * unit, height: 14 * unit)
+                        Capsule().fill(dark).frame(width: 46 * unit, height: 5 * unit)
+                    }
+                    .offset(y: -30 * unit)
+                }
+                Text(monster.info.emblem)
+                    .font(.system(size: 13 * unit, weight: .black, design: .rounded))
+                    .foregroundStyle(Theme.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .padding(.horizontal, 5 * unit)
+                    .frame(minWidth: 26 * unit, minHeight: 26 * unit)
+                    .background(Capsule().fill(.white))
+                    .overlay(Capsule().stroke(dark, lineWidth: 2 * unit))
+                    .offset(x: 34 * unit, y: -26 * unit)
+            }
         }
     }
 }

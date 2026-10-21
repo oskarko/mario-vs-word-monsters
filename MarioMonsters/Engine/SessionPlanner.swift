@@ -94,6 +94,15 @@ enum DetectiveChecklist {
         if words.contains("years") {
             items.append("¿Has usado am / is + years old (y no have)?")
         }
+        if card.monster == .gotLost, words.contains("got") {
+            items.append("¿Has puesto got detrás de have / has?")
+        }
+        if card.monster == .yesterday, card.kind == .sentence {
+            items.append("¿El verbo está en pasado?")
+        }
+        if card.monster == .bossy, words.contains(where: ["can", "must", "could", "shall"].contains) {
+            items.append("¿Has quitado el to detrás de can / must?")
+        }
         if card.monster == .snake, !words.contains("i") {
             items.append("¿Quién es? Si es he / she / it, ¿has puesto la S?")
         }

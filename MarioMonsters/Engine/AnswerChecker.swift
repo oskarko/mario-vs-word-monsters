@@ -10,6 +10,9 @@ enum AnswerChecker {
         "it's": ["it", "is"], "he's": ["he", "is"], "she's": ["she", "is"],
         "we're": ["we", "are"], "they're": ["they", "are"], "you're": ["you", "are"],
         "there's": ["there", "is"], "what's": ["what", "is"], "wasn't": ["was", "not"],
+        "weren't": ["were", "not"], "didn't": ["did", "not"], "mustn't": ["must", "not"],
+        "couldn't": ["could", "not"], "won't": ["will", "not"], "i've": ["i", "have"],
+        "you've": ["you", "have"], "we've": ["we", "have"], "they've": ["they", "have"],
     ]
 
     private static let numbers: [String: String] = [
@@ -23,12 +26,17 @@ enum AnswerChecker {
             .replacingOccurrences(of: "’", with: "'")
             .folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "en"))
         let cleaned = String(folded.map { $0.isLetter || $0.isNumber || $0 == "'" ? $0 : " " })
-        return cleaned.split(separator: " ").flatMap { token -> [String] in
+        var result = cleaned.split(separator: " ").flatMap { token -> [String] in
             let word = String(token)
             if let expanded = contractions[word] { return expanded }
             if let spelled = numbers[word] { return [spelled] }
             return [word]
         }
+        // "She's got" expands to "she is got", but before got the 's can only mean has.
+        for index in result.indices.dropLast() where result[index] == "is" && result[index + 1] == "got" {
+            result[index] = "has"
+        }
+        return result
     }
 
     static func sentenceMatches(_ answer: String, _ target: String) -> Bool {

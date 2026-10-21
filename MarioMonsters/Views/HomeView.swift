@@ -8,6 +8,7 @@ struct HomeView: View {
     @AppStorage(SettingsKey.childName) private var childName = "Mario"
     @AppStorage(SettingsKey.sessionLength) private var sessionLength = 10
     @AppStorage(SettingsKey.speechEnabled) private var speechEnabled = true
+    @AppStorage(SettingsKey.enabledMonsters) private var enabledRaw = MonsterSelection.defaultRaw
 
     @State private var session: SessionModel?
     @State private var showParent = false
@@ -16,9 +17,15 @@ struct HomeView: View {
         Dictionary(progress.map { ($0.cardID, $0.box) }, uniquingKeysWith: { a, _ in a })
     }
 
+    private var enabled: Set<MonsterID> { MonsterSelection.decode(enabledRaw) }
+
+    /// Only cards of switched-on monsters count; switched-off ones keep their progress for later.
     private var dueCount: Int {
         let now = Date.now
-        return progress.filter { $0.due <= now }.count
+        let enabled = enabled
+        return progress.filter { item in
+            item.due <= now && Curriculum.card(id: item.cardID).map { enabled.contains($0.monster) } == true
+        }.count
     }
 
     var body: some View {
@@ -106,7 +113,7 @@ struct HomeView: View {
 
     private var monsterGrid: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 16)], spacing: 16) {
-            ForEach(MonsterID.allCases) { monster in
+            ForEach(MonsterID.allCases.filter(enabled.contains)) { monster in
                 NavigationLink(value: monster) {
                     MonsterCard(monster: monster, boxes: boxes)
                 }
@@ -117,7 +124,8 @@ struct HomeView: View {
 
     private func start(focus: MonsterID?) {
         Speaker.shared.stop()
-        session = SessionModel(store: ProgressStore(context: context), focus: focus, length: sessionLength, speechEnabled: speechEnabled)
+        session = SessionModel(store: ProgressStore(context: context), focus: focus, length: sessionLength,
+                               speechEnabled: speechEnabled, cards: MonsterSelection.cards(enabled: enabled))
     }
 }
 

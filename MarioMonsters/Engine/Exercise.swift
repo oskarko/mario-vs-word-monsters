@@ -45,13 +45,14 @@ enum TileFactory {
     private static let properNouns: Set<String> = [
         "I", "María", "Tom", "Paul", "Emma", "Julia", "Spain", "Canada", "English", "TV",
         "Monday", "Mondays", "Tuesday", "Wednesday", "Wednesdays", "Thursday", "Friday", "Fridays",
-        "Saturday", "Saturdays", "Sunday", "December",
+        "Saturday", "Saturdays", "Sunday", "Sundays", "December", "Max",
     ]
 
     /// Tiles are shown in lower case unless the word is always capitalised,
     /// so that the sentence-start capital does not give the order away.
     static func canonical(_ token: String, index: Int) -> String {
         if properNouns.contains(token) || token.hasPrefix("I'") { return token }
+        if token.hasSuffix("'s"), properNouns.contains(String(token.dropLast(2))) { return token }
         if index > 0, token.first?.isUppercase == true { return token }
         return token.lowercased()
     }

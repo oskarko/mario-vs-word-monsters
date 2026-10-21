@@ -48,13 +48,16 @@ struct SessionView: View {
         }
         .animation(.spring(duration: 0.35), value: model.phase)
         .animation(.spring(duration: 0.35), value: model.index)
-        .confirmationDialog("¿Salir de la misión?", isPresented: $confirmQuit, titleVisibility: .visible) {
-            Button("Salir (se guarda lo que has hecho)", role: .destructive) {
+        .alert("¿Salir de la misión?", isPresented: $confirmQuit) {
+            Button("Cancelar", role: .cancel) {}
+            Button("Salir", role: .destructive) {
                 model.finish()
                 dismiss()
             }
-            Button("Seguir jugando", role: .cancel) {}
+        } message: {
+            Text("Todo lo que has hecho hasta ahora queda guardado. Podrás seguir en la próxima misión.")
         }
+        .onDisappear { Speaker.shared.stop() }
     }
 
     private var topBar: some View {
@@ -130,22 +133,23 @@ struct FeedbackPanel: View {
                 Label("¡Bien hecho!", systemImage: "checkmark.circle.fill")
                     .font(Theme.title(26)).foregroundStyle(Theme.good)
                 if kind != .listenChoose {
-                    Text(card.english).font(Theme.body(20)).foregroundStyle(Theme.ink)
+                    answerRow(Text(card.english).font(Theme.body(20)).foregroundStyle(Theme.ink))
                 }
             case false?:
                 Label("¡Casi! Así se escribe:", systemImage: "lightbulb.fill")
                     .font(Theme.title(24)).foregroundStyle(Theme.bad)
-                HStack {
-                    Text("✅ \(card.english)").font(Theme.title(24)).foregroundStyle(Theme.good)
-                    Spacer()
-                    SpeakButton(action: { Speaker.shared.english(card.english, slow: true) }, systemImage: "tortoise.fill", size: 44, color: Theme.good)
-                }
-                if let given = result.given, kind != .paper {
-                    Text("❌ \(given)")
-                        .font(Theme.body(19))
-                        .strikethrough(color: Theme.bad)
-                        .foregroundStyle(Theme.ink.opacity(0.6))
-                }
+                // The answer gets the full width so it can wrap instead of being cut by the buttons.
+                Text("✅ \(card.english)")
+                    .font(Theme.title(24)).foregroundStyle(Theme.good)
+                    .fixedSize(horizontal: false, vertical: true)
+                answerRow(Group {
+                    if let given = result.given, kind != .paper {
+                        Text("❌ \(given)")
+                            .font(Theme.body(19))
+                            .strikethrough(color: Theme.bad)
+                            .foregroundStyle(Theme.ink.opacity(0.6))
+                    }
+                })
                 Button {
                     Speaker.shared.spanish(card.explanation)
                 } label: {
@@ -160,7 +164,7 @@ struct FeedbackPanel: View {
             case nil:
                 Label("¡Seguimos!", systemImage: "arrow.right.circle.fill")
                     .font(Theme.title(24)).foregroundStyle(Theme.neutral)
-                Text(card.english).font(Theme.body(20)).foregroundStyle(Theme.ink)
+                answerRow(Text(card.english).font(Theme.body(20)).foregroundStyle(Theme.ink))
             }
             Button(action: onContinue) {
                 Text("Continuar").frame(maxWidth: .infinity)
@@ -175,6 +179,16 @@ struct FeedbackPanel: View {
                 .shadow(color: .black.opacity(0.15), radius: 12, y: -4)
                 .ignoresSafeArea()
         )
+    }
+
+    /// Text on the left (wrapping), normal + slow audio on the right.
+    private func answerRow(_ content: some View) -> some View {
+        HStack(alignment: .center, spacing: 12) {
+            content
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            AudioButtons(text: card.english, size: 44, axis: .horizontal)
+        }
     }
 
     private var color: Color {

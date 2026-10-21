@@ -2,9 +2,9 @@ import Foundation
 
 /// Cambridge Movers / 4º EPO content, built from the mistakes in Mario's notebook
 /// (September–October 2026): to be, have got, there is/are, can, present simple,
-/// describing people, food, days and family.
+/// describing people, food, days and family. The rest of the Movers syllabus is in CurriculumMovers.swift.
 enum Curriculum {
-    static let all: [Card] = ae + noNo + jumper + snake + traps
+    static let all: [Card] = ae + noNo + jumper + snake + traps + gotLost + moversGrammar + moversVocabulary
 
     static func cards(for monster: MonsterID) -> [Card] {
         all.filter { $0.monster == monster }
@@ -175,11 +175,11 @@ enum Curriculum {
 
     // MARK: - Builders
 
-    private static func w(_ monster: MonsterID, _ english: String, _ spanish: String, _ emoji: String, _ wrong: [String], tip: String? = nil) -> Card {
+    static func w(_ monster: MonsterID, _ english: String, _ spanish: String, _ emoji: String, _ wrong: [String], tip: String? = nil) -> Card {
         Card(monster: monster, kind: .word, english: english, spanish: spanish, emoji: emoji, wrong: wrong, tip: tip)
     }
 
-    private static func s(_ monster: MonsterID, _ english: String, _ spanish: String, _ emoji: String, _ wrong: [String], tip: String? = nil) -> Card {
+    static func s(_ monster: MonsterID, _ english: String, _ spanish: String, _ emoji: String, _ wrong: [String], tip: String? = nil) -> Card {
         Card(monster: monster, kind: .sentence, english: english, spanish: spanish, emoji: emoji, wrong: wrong, tip: tip)
     }
 }

@@ -71,11 +71,12 @@ struct LadderTests {
 
 struct SessionPlannerTests {
     let now = Date(timeIntervalSince1970: 1_790_000_000)
+    let defaultCards = MonsterSelection.cards(enabled: Set(MonsterID.defaultEnabled))
 
     @Test func firstSessionMixesMonsters() {
-        let plan = SessionPlanner.plan(progress: [:], focus: nil, length: 10, now: now)
+        let plan = SessionPlanner.plan(cards: defaultCards, progress: [:], focus: nil, length: 10, now: now)
         #expect(plan.count == 8)
-        #expect(Set(plan.map(\.monster)).count == MonsterID.allCases.count)
+        #expect(Set(plan.map(\.monster)).count == MonsterID.defaultEnabled.count)
     }
 
     @Test func dueCardsComeFirstButLeaveRoomForNewOnes() {
@@ -97,8 +98,8 @@ struct SessionPlannerTests {
         let due = Curriculum.all.reduce(into: [String: ProgressSnapshot]()) {
             $0[$1.id] = ProgressSnapshot(box: 2, due: .distantPast)
         }
-        let plan = SessionPlanner.plan(progress: due, focus: nil, length: 10, now: now)
-        #expect(Set(plan.map(\.monster)).count == MonsterID.allCases.count)
+        let plan = SessionPlanner.plan(cards: defaultCards, progress: due, focus: nil, length: 10, now: now)
+        #expect(Set(plan.map(\.monster)).count == MonsterID.defaultEnabled.count)
     }
 
     @Test func focusRestrictsToOneMonster() {
@@ -178,11 +179,33 @@ struct ContentTests {
         #expect(DetectiveChecklist.items(for: question).contains { $0.contains("verbo") })
     }
 
+    @Test func everyMonsterHasInfo() {
+        for monster in MonsterID.allCases {
+            #expect(!monster.info.name.isEmpty)
+            #expect(!monster.info.emblem.isEmpty)
+        }
+    }
+
     @Test func streakCountsConsecutiveDays() {
         let calendar = Calendar.current
         let today = Date.now
         let days = (0..<3).map { calendar.date(byAdding: .day, value: -$0, to: today)! }
         #expect(Streak.days(sessionDates: days) == 3)
         #expect(Streak.days(sessionDates: [calendar.date(byAdding: .day, value: -3, to: today)!]) == 0)
+    }
+}
+
+struct MonsterSelectionTests {
+    @Test func typicalErrorsAreOnByDefault() {
+        #expect(MonsterID.defaultEnabled == MonsterGroup.core.monsters)
+        #expect(Set(MonsterID.defaultEnabled) == [.ae, .noNo, .jumper, .snake, .traps, .gotLost])
+    }
+
+    @Test func selectionIsNeverEmptyAndRoundTrips() {
+        #expect(MonsterSelection.decode("") == Set(MonsterID.defaultEnabled))
+        #expect(MonsterSelection.decode("nonsense") == Set(MonsterID.defaultEnabled))
+        let picked: Set<MonsterID> = [.animals, .yesterday, .ae]
+        #expect(MonsterSelection.decode(MonsterSelection.encode(picked)) == picked)
+        #expect(MonsterSelection.cards(enabled: [.animals]).allSatisfy { $0.monster == .animals })
     }
 }

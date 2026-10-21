@@ -24,9 +24,11 @@
 		9305A14D824319390CAACC68 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC3E8DCDEAE355DE0FC84DF /* Persistence.swift */; };
 		939F9D492EBA8AFCDF11FEC8 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05100AD5C73261879A92078 /* Exercise.swift */; };
 		97657234638358E97683DE80 /* PaperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8923593D7DC0FB1DFF7645 /* PaperView.swift */; };
+		A04A162AA2FF567036F976EC /* MoversMonsters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547A220204CE48BB9533CE9 /* MoversMonsters.swift */; };
 		AEAEFE17AF9DC3A78A95D1D1 /* SayItView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCF6AE52EDFD5E51C6E2C40 /* SayItView.swift */; };
 		B9E0F99583155FCF845F5908 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB5E068105FF6DC6F838764 /* FlowLayout.swift */; };
 		BCAC0477F972CDD662A390C3 /* ListenChooseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C449F1E8957B03088B47689 /* ListenChooseView.swift */; };
+		BEB0F36C0723A326D2C2FA57 /* CurriculumMovers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE9FC4A06555D8DD48483E8 /* CurriculumMovers.swift */; };
 		D1024E3501576605A14C56CB /* MarioMonstersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236C0429A118BEF3D71E1028 /* MarioMonstersApp.swift */; };
 		DD05F9992B7C6866B347D756 /* ProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76003B79AF136C4FC92EF111 /* ProgressStore.swift */; };
 		DE12361DC91D5D40FFBBE3B6 /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A823E2157F1EA06EAFB1A /* Content.swift */; };
@@ -59,6 +61,7 @@
 		4C4A823E2157F1EA06EAFB1A /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
 		5868CBF55868A5D5C7EE6A1B /* AnswerChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerChecker.swift; sourceTree = "<group>"; };
 		64321B77EDD65763120B334C /* SpeechListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechListener.swift; sourceTree = "<group>"; };
+		6547A220204CE48BB9533CE9 /* MoversMonsters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoversMonsters.swift; sourceTree = "<group>"; };
 		66A31945E68F96A4651652AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66DF5C719FD3500131943993 /* EngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
 		6F76787B10B2359ECD952DB3 /* ExerciseComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseComponents.swift; sourceTree = "<group>"; };
@@ -69,6 +72,7 @@
 		85A74EFDE9293EFEFE08694A /* Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
 		8A6E8BC82A2F1BF59FC63A81 /* ParentViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentViews.swift; sourceTree = "<group>"; };
 		9A0B239161F56DB94CD6ACB2 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		9AE9FC4A06555D8DD48483E8 /* CurriculumMovers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurriculumMovers.swift; sourceTree = "<group>"; };
 		9C449F1E8957B03088B47689 /* ListenChooseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenChooseView.swift; sourceTree = "<group>"; };
 		A638FE3D000181571AF83A57 /* MonsterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonsterView.swift; sourceTree = "<group>"; };
 		B0DF5647FFEB4A2838723458 /* Speaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speaker.swift; sourceTree = "<group>"; };
@@ -184,6 +188,8 @@
 			children = (
 				4C4A823E2157F1EA06EAFB1A /* Content.swift */,
 				F965CCF2F833C6E77B8984D3 /* Curriculum.swift */,
+				9AE9FC4A06555D8DD48483E8 /* CurriculumMovers.swift */,
+				6547A220204CE48BB9533CE9 /* MoversMonsters.swift */,
 				7EC3E8DCDEAE355DE0FC84DF /* Persistence.swift */,
 			);
 			path = Model;
@@ -292,6 +298,7 @@
 				89B1A1022326E9133C71D94B /* BuildView.swift in Sources */,
 				DE12361DC91D5D40FFBBE3B6 /* Content.swift in Sources */,
 				F57BD3E6F342A72DBF6F6C16 /* Curriculum.swift in Sources */,
+				BEB0F36C0723A326D2C2FA57 /* CurriculumMovers.swift in Sources */,
 				939F9D492EBA8AFCDF11FEC8 /* Exercise.swift in Sources */,
 				7B77E93EDD7E173A81A6FC22 /* ExerciseComponents.swift in Sources */,
 				B9E0F99583155FCF845F5908 /* FlowLayout.swift in Sources */,
@@ -299,6 +306,7 @@
 				BCAC0477F972CDD662A390C3 /* ListenChooseView.swift in Sources */,
 				D1024E3501576605A14C56CB /* MarioMonstersApp.swift in Sources */,
 				006EA7C1EED56A86A85425EB /* MonsterView.swift in Sources */,
+				A04A162AA2FF567036F976EC /* MoversMonsters.swift in Sources */,
 				97657234638358E97683DE80 /* PaperView.swift in Sources */,
 				2A670382FA63A8CC78011215 /* ParentViews.swift in Sources */,
 				9305A14D824319390CAACC68 /* Persistence.swift in Sources */,

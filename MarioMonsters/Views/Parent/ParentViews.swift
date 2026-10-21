@@ -115,6 +115,7 @@ struct ParentDashboardView: View {
     @Query(sort: \SessionLog.date, order: .reverse) private var sessions: [SessionLog]
     @Query private var progress: [CardProgress]
     @Query(sort: \AttemptLog.date, order: .reverse) private var attempts: [AttemptLog]
+    @AppStorage(SettingsKey.enabledMonsters) private var enabledRaw = MonsterSelection.defaultRaw
 
     private var boxes: [String: Int] {
         Dictionary(progress.map { ($0.cardID, $0.box) }, uniquingKeysWith: { a, _ in a })
@@ -154,7 +155,7 @@ struct ParentDashboardView: View {
             }
 
             Section {
-                ForEach(MonsterID.allCases) { monster in
+                ForEach(MonsterID.allCases.filter(MonsterSelection.decode(enabledRaw).contains)) { monster in
                     let mastered = MonsterStats.mastered(of: monster, boxes: boxes)
                     HStack(spacing: 12) {
                         MonsterView(monster: monster, size: 36)
@@ -217,6 +218,7 @@ struct ParentSettingsView: View {
     @AppStorage(SettingsKey.spanishVoiceHelp) private var spanishVoiceHelp = true
     @AppStorage(SettingsKey.sessionLength) private var sessionLength = 10
     @AppStorage(SettingsKey.parentPIN) private var pin = ""
+    @AppStorage(SettingsKey.enabledMonsters) private var enabledRaw = MonsterSelection.defaultRaw
     @State private var confirmReset = false
 
     var body: some View {
@@ -239,6 +241,15 @@ struct ParentSettingsView: View {
                 Toggle("Ánimos en español en voz alta", isOn: $spanishVoiceHelp)
             }
             Section {
+                NavigationLink {
+                    MonsterSettingsView()
+                } label: {
+                    LabeledContent("Monstruos", value: "\(MonsterSelection.decode(enabledRaw).count) de \(MonsterID.allCases.count) activos")
+                }
+            } footer: {
+                Text("Gramática y vocabulario de todo el nivel Movers. Actívalos según los vayan dando en clase.")
+            }
+            Section {
                 Button("Cambiar PIN") { pin = "" }
                 Button("Borrar todo el progreso", role: .destructive) { confirmReset = true }
             }
@@ -248,6 +259,77 @@ struct ParentSettingsView: View {
             Button("Borrar", role: .destructive) { ProgressStore(context: context).resetAll() }
         } message: {
             Text("No se puede deshacer.")
+        }
+    }
+}
+
+/// Which monsters appear in the missions: the typical errors are on by default, the Movers packs are opt-in.
+struct MonsterSettingsView: View {
+    @AppStorage(SettingsKey.enabledMonsters) private var enabledRaw = MonsterSelection.defaultRaw
+
+    private var enabled: Set<MonsterID> { MonsterSelection.decode(enabledRaw) }
+
+    var body: some View {
+        Form {
+            Section {
+                Button("Activar todos") { enabledRaw = MonsterSelection.encode(Set(MonsterID.allCases)) }
+                    .disabled(enabled.count == MonsterID.allCases.count)
+                Button("Volver a los de por defecto") { enabledRaw = MonsterSelection.defaultRaw }
+                    .disabled(enabled == Set(MonsterID.defaultEnabled))
+            } footer: {
+                Text("Ve activando cada tema cuando lo den en el colegio. Desactivar un monstruo no borra su progreso: solo deja de salir en las misiones.")
+            }
+
+            ForEach(MonsterGroup.allCases) { group in
+                Section {
+                    ForEach(group.monsters) { monster in
+                        Toggle(isOn: binding(for: monster)) {
+                            HStack(spacing: 12) {
+                                MonsterView(monster: monster, size: 36)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(monster.info.name).font(.headline)
+                                    Text(monster.info.tagline).font(.caption).foregroundStyle(.secondary)
+                                    Text("\(Curriculum.cards(for: monster).count) tarjetas")
+                                        .font(.caption2).foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                        .disabled(enabled == [monster])
+                    }
+                } header: {
+                    groupHeader(group)
+                } footer: {
+                    Text(group.footer)
+                }
+            }
+        }
+        .navigationTitle("Monstruos")
+    }
+
+    private func groupHeader(_ group: MonsterGroup) -> some View {
+        let members = Set(group.monsters)
+        let allOn = members.isSubset(of: enabled)
+        let remaining = allOn ? enabled.subtracting(members) : enabled.union(members)
+        return HStack {
+            Text(group.title)
+            Spacer()
+            Button(allOn ? "Desactivar todos" : "Activar todos") {
+                enabledRaw = MonsterSelection.encode(remaining)
+            }
+            .buttonStyle(.borderless)
+            .textCase(nil)
+            .disabled(remaining.isEmpty)
+        }
+    }
+
+    private func binding(for monster: MonsterID) -> Binding<Bool> {
+        Binding {
+            enabled.contains(monster)
+        } set: { isOn in
+            var set = enabled
+            if isOn { set.insert(monster) } else { set.remove(monster) }
+            guard !set.isEmpty else { return }
+            enabledRaw = MonsterSelection.encode(set)
         }
     }
 }

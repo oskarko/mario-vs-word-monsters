@@ -22,8 +22,17 @@ extension MonsterID {
         case .jumper: Color(red: 0.20, green: 0.70, blue: 0.85)
         case .snake: Color(red: 0.30, green: 0.75, blue: 0.35)
         case .traps: Color(red: 1.00, green: 0.58, blue: 0.20)
+        case .gotLost: Color(red: 0.95, green: 0.45, blue: 0.70)
+        default:
+            // Movers packs: spread hues evenly so neighbours in the grid look different.
+            Color(hue: (Double(index) * 0.137).truncatingRemainder(dividingBy: 1), saturation: 0.55, brightness: 0.88)
         }
     }
+
+    var index: Int { MonsterID.allCases.firstIndex(of: self) ?? 0 }
+
+    /// The original monsters have hand-made looks; the rest share generated ones plus their emblem.
+    var isOriginal: Bool { [.ae, .noNo, .jumper, .snake, .traps].contains(self) }
 }
 
 /// Chunky "3D" button: the face sinks onto its shadow when pressed.
@@ -68,6 +77,7 @@ struct SpeakButton: View {
     var systemImage = "speaker.wave.2.fill"
     var size: CGFloat = 54
     var color = Theme.neutral
+    var label = "Escuchar"
 
     var body: some View {
         Button {
@@ -79,7 +89,7 @@ struct SpeakButton: View {
                 .frame(width: size, height: size)
         }
         .buttonStyle(ChunkyButtonStyle(color: color))
-        .accessibilityLabel("Escuchar")
+        .accessibilityLabel(label)
     }
 }
 

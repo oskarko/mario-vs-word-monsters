@@ -22,7 +22,7 @@ struct ExerciseView: View {
                 Speaker.shared.english(exercise.card.english)
             }
         }
-        .onDisappear { Speaker.shared.stop() }
+        // No stop() on disappear: the next card's onAppear can run first and its audio would be cut.
     }
 }
 
@@ -64,13 +64,25 @@ struct PromptCard: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             if showsAudio {
-                VStack(spacing: 10) {
-                    SpeakButton { Speaker.shared.english(card.english) }
-                    SpeakButton(action: { Speaker.shared.english(card.english, slow: true) }, systemImage: "tortoise.fill", size: 44, color: Theme.good)
-                }
+                AudioButtons(text: card.english)
             }
         }
         .cardStyle()
+    }
+}
+
+/// Normal and slow ("tortoise") English audio, always shown together.
+struct AudioButtons: View {
+    let text: String
+    var size: CGFloat = 54
+    var axis: Axis = .vertical
+
+    var body: some View {
+        let layout = axis == .vertical ? AnyLayout(VStackLayout(spacing: 10)) : AnyLayout(HStackLayout(spacing: 10))
+        layout {
+            SpeakButton(action: { Speaker.shared.english(text) }, size: size)
+            SpeakButton(action: { Speaker.shared.english(text, slow: true) }, systemImage: "tortoise.fill", size: size, color: Theme.good, label: "Escuchar despacio")
+        }
     }
 }
 

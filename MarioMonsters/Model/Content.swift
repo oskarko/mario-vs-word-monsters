@@ -1,10 +1,50 @@
 import Foundation
 
-/// Each monster is one of Mario's recurring root errors, externalised as a character.
+/// Each monster is a recurring root error (or a Movers topic), externalised as a character.
 enum MonsterID: String, CaseIterable, Codable, Identifiable, Sendable {
-    case ae, noNo, jumper, snake, traps
+    // Typical errors, from Mario's notebook.
+    case ae, noNo, jumper, snake, traps, gotLost
+    // Movers grammar.
+    case mixer, yesterday, bigger, nowNow, octopus, apostrophe, plurals, bossy, snail, linker
+    // Movers vocabulary.
+    case animals, body, clothes, family, food, home, school, sports, town, nature, transport, time, jobs, numbers, feelings
 
     var id: String { rawValue }
+
+    var group: MonsterGroup {
+        switch self {
+        case .ae, .noNo, .jumper, .snake, .traps, .gotLost: .core
+        case .mixer, .yesterday, .bigger, .nowNow, .octopus, .apostrophe, .plurals, .bossy, .snail, .linker: .grammar
+        default: .vocabulary
+        }
+    }
+
+    /// The typical errors start switched on; Movers topics are switched on by a parent as they come up at school.
+    static let defaultEnabled: [MonsterID] = allCases.filter { $0.group == .core }
+}
+
+enum MonsterGroup: String, CaseIterable, Identifiable, Sendable {
+    case core, grammar, vocabulary
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .core: "Errores típicos"
+        case .grammar: "Gramática Movers"
+        case .vocabulary: "Vocabulario Movers"
+        }
+    }
+
+    var footer: String {
+        switch self {
+        case .core: "Los errores de raíz de los niños hispanohablantes, sacados de fichas reales."
+        case .grammar: "El resto de la gramática del nivel Cambridge Movers (A1). Actívalos cuando lo vean en clase."
+        case .vocabulary: "Las palabras del nivel Movers por temas, con las faltas típicas de quien escribe como suena."
+        }
+    }
+
+    var monsters: [MonsterID] { MonsterID.allCases.filter { $0.group == self } }
 }
 
 enum CardKind: String, Codable, Sendable {
@@ -88,6 +128,8 @@ extension MonsterID {
                 taunts: ["¡Tradúcelo tal cual! Jejeje", "¡Igual que en español!", "¡Caíste en mi trampa!"],
                 hits: ["¡Ay! ¡Has esquivado mi trampa!", "¡Lo dices como un inglés!", "¡Nooo! ¡No has caído!"]
             )
+        default:
+            moversInfo
         }
     }
 }

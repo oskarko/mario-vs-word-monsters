@@ -68,16 +68,23 @@ final class SpeechListener {
         }
     }
 
-    func stop() {
+    /// Stops the microphone but lets the recognizer finish the last words; the final result then calls `stop()`.
+    func finishAudio() {
         engine?.stop()
         engine?.inputNode.removeTap(onBus: 0)
-        request?.endAudio()
-        task?.cancel()
         engine = nil
+        request?.endAudio()
+    }
+
+    func stop() {
+        let wasActive = engine != nil || task != nil
+        finishAudio()
+        task?.cancel()
         request = nil
         task = nil
         if state == .listening { state = .idle }
-        Speaker.activatePlayback()
+        // Only switch the audio session back if we took it, otherwise this could interrupt playback.
+        if wasActive { Speaker.activatePlayback() }
     }
 
     nonisolated private static func authorizeSpeech() async -> Bool {

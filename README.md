@@ -34,7 +34,7 @@ Flashcard and Duolingo-style apps don't attack those specific habits. **Mario vs
   <img src="docs/screenshots/paper.png" width="200" alt="Write it on paper and check with the detective list">
 </p>
 
-## The five monsters
+## The monsters
 
 Each typical error made by Spanish speakers is a monster. Kids **hunt the mistake** instead of hiding it.
 
@@ -45,6 +45,18 @@ Each typical error made by Spanish speakers is a monster. Kids **hunt the mistak
 | 🔵 **Verbo Saltarín** | Questions without inversion | `You are happy?` → Are you happy? |
 | 🟢 **Serpiente de la S** | Pronouns & 3rd-person **-s** | `she play` → she plays |
 | 🟠 **Trampas Españolas** | Word-for-word calques | `I have 10 years` → I am 10 years old |
+| 🩷 **El Got Perdido** | Dropping *got* from *have got* | `I have a dog` → I have got a dog |
+
+These six are switched on by default. Every one can be turned off in the parent area.
+
+### The whole Movers syllabus (opt-in)
+
+The app also covers the **full Cambridge Movers (A1) level**, so other children can use it and kids can get ahead. These monsters start **switched off**. Parents turn them on in *Ajustes → Monstruos* one by one, by group, or all at once, as each topic comes up at school. Switching a monster off never deletes its progress.
+
+- **Movers grammar** (10 monsters): word order with adjectives and frequency adverbs, past simple and irregular verbs, comparatives and superlatives, present continuous, prepositions of place and time, possessives (`'s`, *whose*, *mine*, *its/it's*), irregular plurals, modals (*must*, *have to*, *can*, *could*, *shall*), adverbs (*well*, *quickly*) and linkers (*who*, *which*, *where*, *because*).
+- **Movers vocabulary** (15 monsters): animals, body and health, clothes, family, food, home, school, sports, town, weather and nature, transport, time, jobs, numbers and feelings. Each word comes with the misspellings a Spanish speaker typically makes (`fourty`, `ninty`, `dolfin`).
+
+In total there are 31 monsters and about 550 cards.
 
 ## How it teaches
 
@@ -90,7 +102,7 @@ xcodebuild test -project MarioMonsters.xcodeproj -scheme MarioMonsters \
 
 ## Make it your own child's app
 
-All the content lives in [`MarioMonsters/Model/Curriculum.swift`](MarioMonsters/Model/Curriculum.swift). Each card is one line: the correct English, the Spanish meaning, an emoji, and the **real mistakes your child makes**:
+All the content lives in [`Curriculum.swift`](MarioMonsters/Model/Curriculum.swift) (the typical errors) and [`CurriculumMovers.swift`](MarioMonsters/Model/CurriculumMovers.swift) (the Movers syllabus). Each card is one line: the correct English, the Spanish meaning, an emoji, and the **real mistakes your child makes**:
 
 ```swift
 s(.noNo, "She isn't at home.", "Ella no está en casa.", "🏠", ["She is no home.", "She no at home."])
@@ -124,12 +136,18 @@ Scripts/              App icon renderer
 La hicimos para Mario, de 8 años, que habla muy bien inglés pero escribe como habla y piensa en español. Todo el contenido sale de sus propias fichas corregidas.
 
 ### El problema
-Cometía cinco errores de raíz, siempre los mismos. Cada uno es un monstruo que Mario tiene que derrotar:
+Cometía unos pocos errores de raíz, siempre los mismos. Cada uno es un monstruo que Mario tiene que derrotar:
 - **Monstruo Ae:** escribe las palabras como suenan.
 - **El No-No:** niega con el «no» del español.
 - **Verbo Saltarín:** hace preguntas sin poner el verbo delante.
 - **Serpiente de la S:** confunde pronombres y olvida la -s de la tercera persona.
 - **Trampas Españolas:** traduce palabra por palabra.
+- **El Got Perdido:** se come el «got» de «have got».
+
+Estos seis vienen activados por defecto, y cualquiera se puede desactivar.
+
+### Todo el nivel Movers
+La app incluye además **toda la gramática y el vocabulario de Movers**: 10 monstruos de gramática (pasado, comparativos, preposiciones, modales, posesivos, plurales irregulares…) y 15 de vocabulario (animales, ropa, comida, números, profesiones…). Vienen **desactivados**. En *Ajustes → Monstruos* puedes activarlos uno a uno, por grupos o todos a la vez, según los vayan dando en clase. Si desactivas uno, su progreso no se pierde.
 
 ### Cómo enseña
 - **Externalizar el error.** El fallo es «el monstruo intenta engañarte», no «lo haces mal». El niño caza el error en vez de esconderlo.

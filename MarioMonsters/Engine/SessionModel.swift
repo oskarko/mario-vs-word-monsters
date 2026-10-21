@@ -38,7 +38,7 @@ final class SessionModel: Identifiable {
 
     static let maxAppearances = 3
 
-    init(store: ProgressStore, focus: MonsterID?, length: Int, speechEnabled: Bool, now: Date = .now) {
+    init(store: ProgressStore, focus: MonsterID?, length: Int, speechEnabled: Bool, cards: [Card] = Curriculum.all, now: Date = .now) {
         self.store = store
         self.focus = focus
         self.speechEnabled = speechEnabled
@@ -48,7 +48,7 @@ final class SessionModel: Identifiable {
         let boxes = snapshots.mapValues(\.box)
         startHealth = Dictionary(uniqueKeysWithValues: MonsterID.allCases.map { ($0, MonsterStats.health(of: $0, boxes: boxes)) })
 
-        let cards = SessionPlanner.plan(progress: snapshots, focus: focus, length: length, now: now)
+        let cards = SessionPlanner.plan(cards: cards, progress: snapshots, focus: focus, length: length, now: now)
         queue = cards.map { Exercise.make(card: $0, box: snapshots[$0.id]?.box ?? 0, speechEnabled: speechEnabled) }
         cards.forEach { appearances[$0.id, default: 0] += 1 }
         if queue.isEmpty { phase = .finished }
