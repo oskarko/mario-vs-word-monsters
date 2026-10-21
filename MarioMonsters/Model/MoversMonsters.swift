@@ -9,7 +9,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "El Got Perdido",
                 tagline: "Se lleva el got de have got.",
-                lesson: "Tener (cosas, mascotas, pelo, familia) = have GOT / has GOT. El got va pegado detrás: I have got, she has got. En preguntas salta have: Have you got…? Has she got…? En negativas: haven't got, hasn't got. ¡Solo desaparece en las respuestas cortas: Yes, I have!",
+                lesson: "Para decir que tienes algo, como una mascota, el pelo rizado o un hermano, se dice have got o has got. ¡Que no se pierda el got! Have you got a dog? I haven't got a cat. Solo se va en las respuestas cortas: Yes, I have.",
                 emblem: "got",
                 taunts: ["¡Me llevo tu got! Jejeje", "¡Have a secas, que es más corto!", "¡Got, got… ¿dónde está tu got?"],
                 hits: ["¡Ay! ¡No has perdido el got!", "¡Nooo! ¡Have got completo!", "¡Grrr! ¡Has encontrado el got!"]
@@ -18,7 +18,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "El Revoltijo",
                 tagline: "Desordena las palabras de la frase.",
-                lesson: "El adjetivo va ANTES de la cosa: a red car. Tamaño antes que color: a big black cat. always, often, sometimes, never van antes del verbo (I always walk), pero después de is / are (He is never late). Y very well, very much van al final.",
+                lesson: "En inglés, cómo es la cosa va delante: a red car, un coche rojo. Primero el tamaño y luego el color: a big black cat. Always y never van antes de lo que haces: I always walk. ¡Pero detrás de is! He is never late.",
                 emblem: "🔀",
                 taunts: ["¡Lo pongo todo patas arriba!", "¡Como en español, que da igual!", "¡Revuelve, revuelve! Jejeje"],
                 hits: ["¡Ay! ¡Cada palabra en su sitio!", "¡Nooo! ¡Me has ordenado!", "¡Grrr! ¡Qué orden más inglés!"]
@@ -27,7 +27,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "Reloj del Ayer",
                 tagline: "Se olvida de poner el verbo en pasado.",
-                lesson: "Para el pasado (yesterday, last week…) el verbo cambia. Muchos añaden -ed: play → played, watch → watched. Los rebeldes hay que aprendérselos: go → went, see → saw, eat → ate, have → had, is → was. Con didn't y Did…? el verbo vuelve a ser normal: I didn't go, Did you see…?",
+                lesson: "Si ya pasó, como yesterday o last week, el verbo cambia. Muchos añaden ed: play, played. Otros son rebeldes y hay que aprendérselos: go, went. See, saw. Eat, ate. Con didn't y con Did, el verbo vuelve a ser normal: I didn't go. Did you see it?",
                 emblem: "⏪",
                 taunts: ["¡Tic tac! ¡Ayer es igual que hoy!", "¡Goed, eated! Jejeje", "¡El pasado no existe!"],
                 hits: ["¡Ay! ¡Ese pasado está perfecto!", "¡Nooo! ¡Te sabes los rebeldes!", "¡Tic… tac… me paro!"]
@@ -36,7 +36,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "Gigante Comparón",
                 tagline: "Lía los comparativos y superlativos.",
-                lesson: "Palabras cortas: + er / the + est: big → bigger → the biggest. Palabras largas: more / the most: more beautiful, the most beautiful. Rebeldes: good → better → the best, bad → worse → the worst. Y para comparar se usa than (no that).",
+                lesson: "Con palabras cortas añade er para comparar: big, bigger. Y est para el que más: the biggest. Con palabras largas se usa more y the most: more beautiful. Hay rebeldes: good, better, the best. ¡Y «que» se dice than!",
                 emblem: "📏",
                 taunts: ["¡Soy más big que tú!", "¡The most good! Jejeje", "¡Gooder, badder!"],
                 hits: ["¡Ay! ¡Eres el mejor comparando!", "¡Nooo! ¡Better, no gooder!", "¡Me has hecho más pequeño!"]
@@ -45,7 +45,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "Monstruo Ahora-Mismo",
                 tagline: "Se come el is / are de las frases con -ing.",
-                lesson: "Para lo que pasa AHORA: am / is / are + verbo-ing: She is running. ¡No te olvides del is! Ojo con la ortografía: run → running, swim → swimming, make → making. Lo que haces siempre o cada día va sin -ing: I go to school every day.",
+                lesson: "Para lo que está pasando ahora mismo se usa is o are, y el verbo con ing: She is running. ¡Que no se te olvide el is! Lo que haces todos los días va sin ing: I go to school every day.",
                 emblem: "⏳",
                 taunts: ["¡Ñam! ¡Me como tu is!", "¡She running, y ya está!", "¡Ahora mismo te engaño!"],
                 hits: ["¡Ay! ¡Is + ing, perfecto!", "¡Nooo! ¡Has guardado el is!", "¡Ahora mismo me duele!"]
@@ -54,7 +54,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "Pulpo Preposiciones",
                 tagline: "Pone cada cosa en el sitio equivocado.",
-                lesson: "Lugar: in (dentro), on (encima), under (debajo), behind (detrás), next to (al lado), between (entre), in front of (delante de), opposite (enfrente), above (encima, sin tocar). Tiempo: at + hora (at seven o'clock), on + día (on Monday), in + mes, estación o parte del día (in December, in summer, in the morning). ¡Pero at night!",
+                lesson: "¿Dónde está? In es dentro, on es encima, under es debajo, behind es detrás, next to es al lado y between es entre. ¿Cuándo? At para la hora: at seven o'clock. On para el día: on Monday. In para el mes: in December. ¡Pero at night!",
                 emblem: "📍",
                 taunts: ["¡Ocho brazos para liarte!", "¡In, on, at… da igual!", "¡Lo escondo donde no es!"],
                 hits: ["¡Ay! ¡Cada cosa en su sitio!", "¡Nooo! ¡Sabes dónde está!", "¡Mis ocho brazos se rinden!"]
@@ -63,7 +63,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "Ladrón del Apóstrofo",
                 tagline: "Roba el 's y lía los posesivos.",
-                lesson: "El coche de Tom = Tom's car (el dueño primero, con 's). ¿De quién? = Whose…? Mío, tuyo, suyo: mine, yours, his, hers, ours, theirs. Cuidado: its (suyo, de una cosa) ≠ it's (it is), y their (su, de ellos) ≠ there (allí).",
+                lesson: "El coche de Tom se dice Tom's car: primero quién lo tiene, con 's. ¿De quién es? se dice Whose? Mío es mine y tuyo es yours. ¡Ojo! It's quiere decir it is, e its es «suyo», de una cosa.",
                 emblem: "'s",
                 taunts: ["¡Me llevo tu apóstrofo!", "¡El coche de Tom, como en español!", "¡Its, it's… da igual! Jejeje"],
                 hits: ["¡Ay! ¡Has puesto el 's!", "¡Nooo! ¡Sabes de quién es!", "¡Me has pillado robando!"]
@@ -72,7 +72,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "Monstruo Multiplicador",
                 tagline: "Pone -s a los plurales rebeldes.",
-                lesson: "Casi todos los plurales llevan -s, pero algunos son rebeldes: child → children, man → men, woman → women, foot → feet, tooth → teeth, mouse → mice, person → people, sheep → sheep. Y ojo: baby → babies, box → boxes, knife → knives, potato → potatoes.",
+                lesson: "Para decir más de uno casi siempre añadimos una s: one cat, two cats. Pero hay rebeldes: child, children. Man, men. Foot, feet. Tooth, teeth. Mouse, mice. ¡Y sheep no cambia: one sheep, two sheep!",
                 emblem: "×2",
                 taunts: ["¡Childs, mans, foots! Jejeje", "¡Una -s y listo!", "¡Multiplico tus errores!"],
                 hits: ["¡Ay! ¡Te sabes los rebeldes!", "¡Nooo! ¡Children, no childs!", "¡Me divides por cero!"]
@@ -81,7 +81,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "El Mandón",
                 tagline: "Mete «to» detrás de can y must.",
-                lesson: "Detrás de can, can't, could, must, mustn't y shall el verbo va SOLO, sin to: I can swim, You must listen. Pero have to sí lleva to: I have to go, She has to go. Para preguntar salta el verbo: Can you…? Shall I…? (nunca Do you can…?).",
+                lesson: "Detrás de can, must y could, el verbo va solito, sin to: I can swim. You must listen. Pero have to sí lleva to: I have to go. Para preguntar, can salta delante: Can you swim?",
                 emblem: "📢",
                 taunts: ["¡Te ordeno que pongas to!", "¡Do you can? Jejeje", "¡Aquí mando yo!"],
                 hits: ["¡Ay! ¡Can sin to!", "¡Nooo! ¡Ya no me obedeces!", "¡Me has quitado el mando!"]
@@ -90,7 +90,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "Caracol Adverbio",
                 tagline: "Dice good donde va well.",
-                lesson: "Para decir CÓMO se hace algo, añade -ly: quick → quickly, slow → slowly, careful → carefully, happy → happily. Rebeldes: good → well, fast → fast. Good dice cómo ES algo (a good singer). Well dice cómo se HACE (she sings well).",
+                lesson: "Para decir cómo haces algo, añade ly: quick, quickly. Slow, slowly. Hay rebeldes: good se convierte en well, y fast no cambia. Good es cómo es algo: a good singer. Well es cómo lo haces: she sings well.",
                 emblem: "🐌",
                 taunts: ["¡Despaaacio… she sings good!", "¡Quick y ya está!", "¡Sin -ly, que es más rápido!"],
                 hits: ["¡Ay! ¡Qué -ly más bueno!", "¡Nooo! ¡Well, no good!", "¡Me voy despacito…!"]
@@ -99,7 +99,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "El Pegamento",
                 tagline: "Se lía al unir frases.",
-                lesson: "Para unir frases: who (personas), which (cosas y animales), where (lugares), because (porque), but (pero), when (cuando). Y no repitas quién es: The man who lives here (no «who he lives»).",
+                lesson: "Para unir dos frases: who para personas, which para cosas y animales, where para sitios, y because para decir por qué. The man who lives here es el hombre que vive aquí. ¡Sin repetir he!",
                 emblem: "🔗",
                 taunts: ["¡Pego lo que no va!", "¡Which, who… lo mismo da!", "¡Te pego los dedos! Jejeje"],
                 hits: ["¡Ay! ¡Frases bien pegadas!", "¡Nooo! ¡Who para personas!", "¡Me despego!"]
@@ -109,7 +109,7 @@ extension MonsterID {
                             tip: "Fíjate en las letras que no suenan: wHale, dolPHin. ¡Y en las dobles: raBBit, paRRot, kiTTen!")
         case .body:
             Self.vocabulary("Doctor Achís", topic: "el cuerpo y la salud", emblem: "🤧",
-                            tip: "Los dolores se forman con -ache: head + ache = headache, tooth + ache = toothache. La ch de ache suena k.")
+                            tip: "Los dolores terminan en ache: headache, toothache. La ch de ache suena como una k.")
         case .clothes:
             Self.vocabulary("Ropa Revuelta", topic: "la ropa", emblem: "👕",
                             tip: "Muchas prendas van siempre en plural: trousers, shorts, glasses, socks, shoes.")
@@ -127,7 +127,7 @@ extension MonsterID {
                             tip: "Ojo con la k que no es k: comic, music, picnic terminan en c.")
         case .sports:
             Self.vocabulary("Balón Botón", topic: "los deportes", emblem: "⚽",
-                            tip: "Los deportes con -ing doblan a veces la consonante: swim → swimming. ¡Y nada de e delante: skating, no eskating!")
+                            tip: "A veces la última letra se repite: swim, swimming. ¡Y sin e delante! Se escribe skating, no eskating.")
         case .town:
             Self.vocabulary("Monstruo Callejero", topic: "la ciudad", emblem: "🏙️",
                             tip: "library = biblioteca (¡no librería!). Y sin e delante: street, square, station.")
@@ -136,7 +136,7 @@ extension MonsterID {
                             tip: "El tiempo que hace añade -y: sun → sunny, wind → windy, cloud → cloudy.")
         case .transport:
             Self.vocabulary("Motor Ruidoso", topic: "los transportes", emblem: "🚗",
-                            tip: "Cuidado con las parejas: ship (barco) y sheep (oveja), plane (avión) y plain.")
+                            tip: "Cuidado con las parejas que suenan casi igual: ship es barco y sheep es oveja.")
         case .time:
             Self.vocabulary("Calendario Comilón", topic: "los días y el tiempo", emblem: "📅",
                             tip: "Los días de la semana van SIEMPRE con mayúscula: Monday, Friday, Sunday.")
@@ -145,10 +145,10 @@ extension MonsterID {
                             tip: "Muchas profesiones acaban en -er: teacher, farmer, singer, driver.")
         case .numbers:
             Self.vocabulary("Cuentalotodo", topic: "los números", emblem: "🔢",
-                            tip: "forty va SIN u (aunque four la lleve) y ninety CON e. Los números compuestos llevan guion: twenty-five.")
+                            tip: "forty se escribe sin u, aunque four sí la lleve. Ninety sí lleva la e de nine. Y twenty-five va con una rayita en medio.")
         case .feelings:
             Self.vocabulary("Cara de Emociones", topic: "cómo estás y cómo es", emblem: "😀",
-                            tip: "Fíjate en el final: hungry, thirsty, angry acaban en -y. bored, tired, scared, excited acaban en -ed.")
+                            tip: "Mira cómo terminan: hungry, thirsty y angry acaban en y. Bored, tired y scared acaban en ed.")
         default:
             preconditionFailure("\(self) is described in Content.swift")
         }
@@ -158,7 +158,7 @@ extension MonsterID {
         MonsterInfo(
             name: name,
             tagline: "Vocabulario: \(topic).",
-            lesson: "Estas palabras ya las sabes decir. Ahora toca escribirlas bien: mírala, dila, tápala, escríbela y compruébala. \(tip)",
+            lesson: "¡Esta palabra ya la sabes decir! Ahora mírala bien, como si le hicieras una foto, y escríbela otra vez. \(tip)",
             emblem: emblem,
             taunts: ["¡Jejeje! ¡Seguro que te falta una letra!", "¡Esta palabra es mía!", "¡Escríbela como suena! Jejeje"],
             hits: ["¡Ay! ¡Letra a letra, perfecta!", "¡Nooo! ¡Te sabes la foto de la palabra!", "¡Ouch! ¡Qué buena memoria!"]

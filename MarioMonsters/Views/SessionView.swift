@@ -9,6 +9,7 @@ struct SessionView: View {
     @State private var shake = 0
     @State private var bubble: String?
     @State private var confirmQuit = false
+    @State private var scroll = ScrollPosition(edge: .top)
 
     var body: some View {
         ZStack {
@@ -31,6 +32,7 @@ struct SessionView: View {
                         .readableWidth()
                     }
                     .scrollBounceBehavior(.basedOnSize)
+                    .scrollPosition($scroll)
                 }
                 .overlay(alignment: .bottom) {
                     if case .feedback(let result) = model.phase {
@@ -48,6 +50,8 @@ struct SessionView: View {
         }
         .animation(.spring(duration: 0.35), value: model.phase)
         .animation(.spring(duration: 0.35), value: model.index)
+        // A new card starts from the top, with the monster in view.
+        .onChange(of: model.index) { scroll.scrollTo(edge: .top) }
         .alert("¿Salir de la misión?", isPresented: $confirmQuit) {
             Button("Cancelar", role: .cancel) {}
             Button("Salir", role: .destructive) {

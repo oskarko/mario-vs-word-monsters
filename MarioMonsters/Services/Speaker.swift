@@ -40,8 +40,15 @@ final class Speaker {
         }
     }
 
+    /// Read sentence by sentence (with a short pause) so ¿? and ¡! get their intonation.
     func spanish(_ text: String) {
-        speak(text, voice: spanishVoice, rate: 0.5)
+        stop()
+        Self.activatePlayback()
+        for sentence in SpokenSpanish.sentences(text) {
+            let utterance = Self.utterance(sentence, voice: spanishVoice, rate: 0.45)
+            utterance.postUtteranceDelay = 0.25
+            synthesizer.speak(utterance)
+        }
     }
 
     /// Spanish help is optional (parent setting); English is always available.

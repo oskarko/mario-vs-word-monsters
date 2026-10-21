@@ -87,7 +87,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "Monstruo Ae",
                 tagline: "Escribe las palabras como suenan.",
-                lesson: "En inglés las palabras NO se escriben como suenan. Suena «ai» pero se escribe I. Suena «gud» pero se escribe good. ¡Mira bien cada palabra y guárdala en tu cabeza como una foto!",
+                lesson: "En inglés las palabras no se escriben como suenan. Suena «ai», pero se escribe I. Suena «gud», pero se escribe good. ¡Hazle una foto a la palabra con los ojos y guárdala en tu cabeza!",
                 emblem: "Ae",
                 taunts: ["¡Jejeje! ¡Escríbelo como suena!", "¡Ae, Ae, Ae!", "¡Suena así, escríbelo así! Jejeje"],
                 hits: ["¡Aaay! ¡Lo has escrito bien!", "¡Nooo! ¡Te sabes la foto de la palabra!", "¡Ouch! ¡Esa letra me ha dolido!"]
@@ -96,7 +96,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "El No-No",
                 tagline: "Mete «no» del español para negar.",
-                lesson: "En inglés «no» solo sirve para contestar (No, I haven't). Para negar usamos: isn't · aren't · am not · haven't got · hasn't got · can't · don't · doesn't.",
+                lesson: "En inglés, «no» solo vale para contestar: No, I haven't. Para decir que algo no es o no puedes, usa isn't, aren't, can't, don't o haven't got. ¡Nada de un «no» suelto en medio!",
                 emblem: "NO",
                 taunts: ["¡No, no y no! Jejeje", "¡Pon un «no» y ya está!", "¡NO-NO-NO!"],
                 hits: ["¡Ay! ¡Has usado la negación buena!", "¡Mi «no» no funciona contigo!", "¡Grrr! ¡Isn't, don't…! ¡Te las sabes!"]
@@ -105,7 +105,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "Verbo Saltarín",
                 tagline: "Hace preguntas sin mover el verbo.",
-                lesson: "En español basta con poner ¿? En inglés el verbo SALTA al principio: She is happy → Is she happy? Si no hay verbo que salte, salta Do o Does: Does she play chess? ¡Y en inglés solo hay ? al final, nada de ¿!",
+                lesson: "Para preguntar en inglés, el verbo salta al principio. She is happy se convierte en Is she happy? Si no hay verbo que salte, salta Do o Does: Does she play chess? ¡Y el signo de pregunta va solo al final!",
                 emblem: "?",
                 taunts: ["¡Boing! ¡No me muevo!", "¡Pon ¿? y listo! Jejeje", "¡Boing boing!"],
                 hits: ["¡Boing! ¡Me has hecho saltar!", "¡Ay! ¡El verbo está delante!", "¡Nooo, sabes hacer preguntas!"]
@@ -114,7 +114,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "Serpiente de la S",
                 tagline: "Se come la S de he, she, it.",
-                lesson: "Con he, she, it (o un nombre: Tom, my sister) el verbo cambia: she IS, he HAS got, she PLAYS, he WATCHES. Con I, you, we, they no: I am, we have got, they play. Primero piensa: ¿quién es?",
+                lesson: "Cuando hablas de él, de ella o de una cosa, el verbo lleva una s o cambia un poco: she plays, he watches, she is, he has got. Con I, you, we y they no cambia: I play, they play. Antes de escribir, piensa: ¿quién lo hace?",
                 emblem: "S",
                 taunts: ["Ssssss… ¡me como tu S!", "Ssss… she play… jejeje", "¡Ñam! ¡Otra S para mí!"],
                 hits: ["¡Sssss! ¡Has protegido la S!", "¡Ay! ¡Sabes quién es!", "¡Ssss…! ¡Me quedo sin comer!"]
@@ -123,7 +123,7 @@ extension MonsterID {
             MonsterInfo(
                 name: "Trampas Españolas",
                 tagline: "Traduce palabra por palabra.",
-                lesson: "Algunas cosas se dicen distinto en inglés. Hay = There is / There are. Tengo 8 años = I am 8 years old. Los lunes = on Mondays. Pelo rubio = blonde hair (el color va antes). ¡No traduzcas palabra por palabra!",
+                lesson: "Hay cosas que en inglés se dicen de otra manera. Hay se dice There is o There are. Tengo 8 años se dice I am 8 years old. Pelo rubio se dice blonde hair, con el color delante. ¡No lo traduzcas palabra por palabra!",
                 emblem: "ES",
                 taunts: ["¡Tradúcelo tal cual! Jejeje", "¡Igual que en español!", "¡Caíste en mi trampa!"],
                 hits: ["¡Ay! ¡Has esquivado mi trampa!", "¡Lo dices como un inglés!", "¡Nooo! ¡No has caído!"]

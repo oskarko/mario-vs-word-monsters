@@ -209,3 +209,25 @@ struct MonsterSelectionTests {
         #expect(MonsterSelection.cards(enabled: [.animals]).allSatisfy { $0.monster == .animals })
     }
 }
+
+struct SpokenSpanishTests {
+    @Test func symbolsAndEmphasisAreReadNaturally() {
+        #expect(SpokenSpanish.normalise("hair = pelo. ¡No es endulzado! 🍭") == "hair, es pelo. ¡No es endulzado!")
+        #expect(SpokenSpanish.normalise("swim → swimming") == "swim, swimming")
+        #expect(SpokenSpanish.normalise("Delante de = IN front OF.") == "Delante de, es in front of.")
+        #expect(SpokenSpanish.normalise("friend lleva una i: fr-I-end. wHale") == "friend lleva una i: friend. whale")
+        #expect(SpokenSpanish.normalise("straight: s-t-r-a-i-g-h-t, -ing, I, Monday") == "straight: s-t-r-a-i-g-h-t, ing, I, Monday")
+    }
+
+    @Test func eachSentenceIsReadOnItsOwn() {
+        #expect(SpokenSpanish.sentences("¿Quién es? ¡Piensa! Has she got…? Vale.") == ["¿Quién es?", "¡Piensa!", "Has she got…?", "Vale."])
+    }
+
+    @Test func allHelpTextCanBeSpoken() {
+        for card in Curriculum.all {
+            let spoken = SpokenSpanish.sentences(card.explanation).joined(separator: " ")
+            #expect(!spoken.isEmpty)
+            #expect(!spoken.contains(where: { "→=≠«»·".contains($0) }), "\(spoken)")
+        }
+    }
+}
