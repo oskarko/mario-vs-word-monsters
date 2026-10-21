@@ -13,9 +13,11 @@ enum SessionPlanner {
         progress: [String: ProgressSnapshot],
         focus: MonsterID?,
         length: Int,
-        newLimit: Int = 4,
+        newLimit: Int? = nil,
         now: Date = .now
     ) -> [Card] {
+        // A generous first session so the start doesn't feel thin; afterwards new cards trickle in.
+        let newLimit = newLimit ?? (progress.isEmpty ? 8 : 5)
         let pool = focus.map { monster in cards.filter { $0.monster == monster } } ?? cards
 
         // Most overdue first within each monster, but alternate monsters so a big backlog is not all one error.

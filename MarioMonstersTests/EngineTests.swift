@@ -74,8 +74,8 @@ struct SessionPlannerTests {
 
     @Test func firstSessionMixesMonsters() {
         let plan = SessionPlanner.plan(progress: [:], focus: nil, length: 10, now: now)
-        #expect(plan.count == 4)
-        #expect(Set(plan.map(\.monster)).count == 4)
+        #expect(plan.count == 8)
+        #expect(Set(plan.map(\.monster)).count == MonsterID.allCases.count)
     }
 
     @Test func dueCardsComeFirstButLeaveRoomForNewOnes() {
@@ -85,6 +85,12 @@ struct SessionPlannerTests {
         let plan = SessionPlanner.plan(progress: due, focus: nil, length: 10, now: now)
         #expect(plan.count == 10)
         #expect(plan.filter { due[$0.id] == nil }.count == 2)
+    }
+
+    @Test func laterSessionsAddUpToFiveNewCards() {
+        let one = [Curriculum.all[0].id: ProgressSnapshot(box: 3, due: now.addingTimeInterval(86_400))]
+        let plan = SessionPlanner.plan(progress: one, focus: nil, length: 10, now: now)
+        #expect(plan.filter { one[$0.id] == nil }.count == 5)
     }
 
     @Test func bigBacklogMixesMonsters() {
