@@ -6,11 +6,13 @@ import SwiftUI
 /// It notices the download on its own and closes.
 struct VoiceSetupView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     @AppStorage(SettingsKey.voiceSetupDismissed) private var dismissedForever = false
     @State private var ready = Speaker.hasClearEnglishVoice
 
     private let steps = [
-        "Abre la app **Ajustes** del iPad o iPhone.",
+        "Toca **Abrir Ajustes** (aquí abajo).",
+        "Vuelve atrás hasta el menú principal de Ajustes (en el iPad ya lo ves a la izquierda).",
         "Entra en **Accesibilidad → Contenido leído → Voces**.",
         "Toca **Inglés** y elige **Serena** o **Kate** (Reino Unido).",
         "Descarga la versión **Mejorada** (son unos 100 MB, mejor con wifi).",
@@ -42,6 +44,12 @@ struct VoiceSetupView: View {
                             }
                         }
                         .cardStyle()
+                        // Only the app's own settings page has a public link; deeper Settings URLs are
+                        // private, break between iOS versions and get apps rejected (guideline 2.5.1).
+                        Button("Abrir Ajustes", systemImage: "gear") {
+                            if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+                        }
+                        .buttonStyle(ChunkyButtonStyle(color: Theme.good))
                         HStack(spacing: 18) {
                             Button("Ya la he descargado") { ready = Speaker.hasClearEnglishVoice }
                                 .buttonStyle(ChunkyButtonStyle())
@@ -64,6 +72,7 @@ struct VoiceSetupView: View {
                 }
             }
         }
+        .presentationSizing(.page)
         .onReceive(NotificationCenter.default.publisher(for: AVSpeechSynthesizer.availableVoicesDidChangeNotification)) { _ in
             ready = Speaker.hasClearEnglishVoice
         }
