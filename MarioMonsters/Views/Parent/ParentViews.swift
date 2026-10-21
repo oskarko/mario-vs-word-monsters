@@ -215,7 +215,6 @@ struct ParentSettingsView: View {
     @Environment(\.modelContext) private var context
     @AppStorage(SettingsKey.childName) private var childName = "Mario"
     @AppStorage(SettingsKey.speechRate) private var speechRate = SettingsKey.defaultSpeechRate
-    @AppStorage(SettingsKey.speechEnabled) private var speechEnabled = true
     @AppStorage(SettingsKey.spanishVoiceHelp) private var spanishVoiceHelp = true
     @AppStorage(SettingsKey.englishVoice) private var englishVoice = ""
     @AppStorage(SettingsKey.sessionLength) private var sessionLength = 10
@@ -249,12 +248,18 @@ struct ParentSettingsView: View {
                     Slider(value: $speechRate, in: 0.3...0.55)
                 }
                 Button("Probar voz") { Speaker.shared.english("She has got curly hair.") }
-                Toggle("Ejercicio «Dilo» con micrófono", isOn: $speechEnabled)
                 Toggle("Ánimos en español en voz alta", isOn: $spanishVoiceHelp)
             } header: {
                 Text("Voz")
             } footer: {
                 Text("En Automática se usa la voz más clara que haya descargada.")
+            }
+            Section {
+                ForEach(Skill.allCases) { SkillLevelPicker(skill: $0) }
+            } header: {
+                Text("Destrezas")
+            } footer: {
+                Text("Cuánto aparece cada tipo de ejercicio. Listening: oír y elegir. Speaking: decirlo con el micrófono. Reading: encontrar y arreglar el error. Writing: construir frases y deletrear. Lo que quitas se cambia por otro ejercicio de dificultad parecida.")
             }
             Section {
                 NavigationLink {
@@ -287,6 +292,22 @@ struct ParentSettingsView: View {
         default: ""
         }
         return "\(voice.name) (\(country))\(quality)"
+    }
+}
+
+private struct SkillLevelPicker: View {
+    let skill: Skill
+    @AppStorage private var level: SkillLevel
+
+    init(skill: Skill) {
+        self.skill = skill
+        _level = AppStorage(wrappedValue: .normal, skill.settingsKey)
+    }
+
+    var body: some View {
+        Picker(skill.parentLabel, selection: $level) {
+            ForEach(SkillLevel.allCases) { Text($0.parentLabel).tag($0) }
+        }
     }
 }
 

@@ -3,6 +3,8 @@ import SwiftUI
 
 @main
 struct MarioMonstersApp: App {
+    init() { SkillLevels.migrateLegacy() }
+
     var body: some Scene {
         WindowGroup {
             HomeView()

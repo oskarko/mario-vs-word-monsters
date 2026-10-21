@@ -35,6 +35,7 @@
 		DE12361DC91D5D40FFBBE3B6 /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A823E2157F1EA06EAFB1A /* Content.swift */; };
 		E0CAF4F9A062F391D06B4A98 /* VoiceSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECEFA9035139FA91EC2BD6F /* VoiceSetupView.swift */; };
 		E17E870847DBCF9AD69CD9EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66A31945E68F96A4651652AF /* Assets.xcassets */; };
+		EFD30DF40FB1AE9986864293 /* Skills.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCB59F9A26AAFB938079C8 /* Skills.swift */; };
 		F20CAA800254A12C228FC787 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A74EFDE9293EFEFE08694A /* Scheduler.swift */; };
 		F4A0C041A653EABBEA216A6B /* SessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933337F19A30F8E2382C696 /* SessionModel.swift */; };
 		F57BD3E6F342A72DBF6F6C16 /* Curriculum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F965CCF2F833C6E77B8984D3 /* Curriculum.swift */; };
@@ -60,6 +61,7 @@
 		24AC1E95C84E72FDA5A8F82B /* BuildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildView.swift; sourceTree = "<group>"; };
 		2C097C7ADB0C1CE03EECD3B6 /* MarioMonsters.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MarioMonsters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32F3DBCD9F53F6A5F880CC2D /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
+		38CCB59F9A26AAFB938079C8 /* Skills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skills.swift; sourceTree = "<group>"; };
 		3AB5E068105FF6DC6F838764 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		4C4A823E2157F1EA06EAFB1A /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
 		5868CBF55868A5D5C7EE6A1B /* AnswerChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerChecker.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				85A74EFDE9293EFEFE08694A /* Scheduler.swift */,
 				0933337F19A30F8E2382C696 /* SessionModel.swift */,
 				82299B5F6258C98F3E272F3D /* SessionPlanner.swift */,
+				38CCB59F9A26AAFB938079C8 /* Skills.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				1E43C0891B4D895DFF0ADCCD /* SessionPlanner.swift in Sources */,
 				10623EC2BAC2F57AF0B4BEAF /* SessionView.swift in Sources */,
 				6C953590FDCC42C56F089943 /* Settings.swift in Sources */,
+				EFD30DF40FB1AE9986864293 /* Skills.swift in Sources */,
 				6A5C0C2BF3C391A90233DBE6 /* Speaker.swift in Sources */,
 				1CEBD47DCDC780011D3311E7 /* SpeechListener.swift in Sources */,
 				0140BD2D73DF540D2692B7A5 /* SpellView.swift in Sources */,

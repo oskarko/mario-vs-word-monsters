@@ -7,7 +7,7 @@ struct HomeView: View {
     @Query(sort: \SessionLog.date) private var sessions: [SessionLog]
     @AppStorage(SettingsKey.childName) private var childName = "Mario"
     @AppStorage(SettingsKey.sessionLength) private var sessionLength = 10
-    @AppStorage(SettingsKey.speechEnabled) private var speechEnabled = true
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @AppStorage(SettingsKey.enabledMonsters) private var enabledRaw = MonsterSelection.defaultRaw
     @AppStorage(SettingsKey.voiceSetupDismissed) private var voiceSetupDismissed = false
 
@@ -122,7 +122,8 @@ struct HomeView: View {
     }
 
     private var monsterGrid: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 16)], spacing: 16) {
+        // Two columns on iPhone, three on iPad: wide enough that every name fits in two lines.
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: sizeClass == .regular ? 3 : 2), spacing: 16) {
             ForEach(MonsterID.allCases.filter(enabled.contains)) { monster in
                 NavigationLink(value: monster) {
                     MonsterCard(monster: monster, boxes: boxes)
@@ -135,7 +136,7 @@ struct HomeView: View {
     private func start(focus: MonsterID?) {
         Speaker.shared.stop()
         session = SessionModel(store: ProgressStore(context: context), focus: focus, length: sessionLength,
-                               speechEnabled: speechEnabled, cards: MonsterSelection.cards(enabled: enabled))
+                               skills: .current(), cards: MonsterSelection.cards(enabled: enabled))
     }
 }
 
@@ -148,7 +149,9 @@ private struct MonsterCard: View {
         let mastered = MonsterStats.mastered(of: monster, boxes: boxes)
         VStack(spacing: 8) {
             MonsterView(monster: monster, mood: health <= 0 ? .defeated : .idle, size: 90)
+            // Two lines reserved always, so a long name doesn't make its card taller than the rest.
             Text(monster.info.name).font(Theme.body(17)).foregroundStyle(Theme.ink).multilineTextAlignment(.center)
+                .lineLimit(2, reservesSpace: true).minimumScaleFactor(0.8)
             HealthBar(value: health, color: monster.color)
             Text(health <= 0 ? "¡Derrotado! 🏆" : "\(mastered.done) / \(mastered.total) dominadas")
                 .font(Theme.body(13)).foregroundStyle(Theme.ink.opacity(0.6))

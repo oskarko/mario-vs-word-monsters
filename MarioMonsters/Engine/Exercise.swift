@@ -26,18 +26,27 @@ struct Exercise: Identifiable, Equatable {
     private static let sentenceLadder: [ExerciseKind] = [.listenChoose, .sayIt, .repair, .build, .build, .paper]
     private static let wordLadder: [ExerciseKind] = [.listenChoose, .sayIt, .spellTiles, .spellKeyboard, .spellKeyboard, .paper]
 
-    static func make(card: Card, box: Int, speechEnabled: Bool) -> Exercise {
-        var rung = min(max(box, 0), 5)
-        if rung == 1 && !speechEnabled { rung = 2 }
+    /// The rung's exercise, unless the parent turned its skill down: then the nearest rung (the easier one on a tie) whose
+    /// skill is on (a "normal" one first) takes its place, so the difficulty stays about the same.
+    static func make(card: Card, box: Int, skills: SkillLevels, roll: Double = .random(in: 0..<1)) -> Exercise {
+        let rung = min(max(box, 0), 5)
         let ladder = card.kind == .sentence ? sentenceLadder : wordLadder
-        return Exercise(card: card, kind: ladder[rung], autoplay: rung < 4)
+        var kind = ladder[rung]
+        if !skills.allows(kind, roll: roll) {
+            let nearest = ladder.indices.sorted { (abs($0 - rung), $0) < (abs($1 - rung), $1) }.map { ladder[$0] }
+            kind = nearest.first { skills[$0.skill] == .normal }
+                ?? nearest.first { skills[$0.skill] != .never }
+                ?? kind
+        }
+        return Exercise(card: card, kind: kind, autoplay: rung < 4)
     }
 
     /// The same card as a different, randomly chosen exercise (used when speaking is skipped).
-    func swapped() -> Exercise {
+    func swapped(skills: SkillLevels = .all) -> Exercise {
         let ladder = card.kind == .sentence ? Self.sentenceLadder : Self.wordLadder
-        let kinds = Set(ladder).subtracting([kind, .sayIt])
-        return Exercise(card: card, kind: kinds.randomElement() ?? .listenChoose, autoplay: autoplay)
+        let others = Set(ladder).subtracting([kind, .sayIt])
+        let allowed = others.filter { skills[$0.skill] != .never }
+        return Exercise(card: card, kind: (allowed.randomElement() ?? others.randomElement()) ?? .listenChoose, autoplay: autoplay)
     }
 }
 

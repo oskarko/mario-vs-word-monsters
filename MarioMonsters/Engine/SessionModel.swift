@@ -31,17 +31,17 @@ final class SessionModel: Identifiable {
     private(set) var saved = false
 
     private let store: ProgressStore
-    private let speechEnabled: Bool
+    private let skills: SkillLevels
     private let start = Date.now
     private var appearances: [String: Int] = [:]
     private let maxLength: Int
 
     static let maxAppearances = 3
 
-    init(store: ProgressStore, focus: MonsterID?, length: Int, speechEnabled: Bool, cards: [Card] = Curriculum.all, now: Date = .now) {
+    init(store: ProgressStore, focus: MonsterID?, length: Int, skills: SkillLevels, cards: [Card] = Curriculum.all, now: Date = .now) {
         self.store = store
         self.focus = focus
-        self.speechEnabled = speechEnabled
+        self.skills = skills
         self.maxLength = length + 8
 
         let snapshots = store.snapshots()
@@ -49,7 +49,7 @@ final class SessionModel: Identifiable {
         startHealth = Dictionary(uniqueKeysWithValues: MonsterID.allCases.map { ($0, MonsterStats.health(of: $0, boxes: boxes)) })
 
         let cards = SessionPlanner.plan(cards: cards, progress: snapshots, focus: focus, length: length, now: now)
-        queue = cards.map { Exercise.make(card: $0, box: snapshots[$0.id]?.box ?? 0, speechEnabled: speechEnabled) }
+        queue = cards.map { Exercise.make(card: $0, box: snapshots[$0.id]?.box ?? 0, skills: skills) }
         cards.forEach { appearances[$0.id, default: 0] += 1 }
         if queue.isEmpty { phase = .finished }
     }
@@ -86,7 +86,7 @@ final class SessionModel: Identifiable {
     /// Swaps the current card for another kind of exercise without counting an answer.
     func skipCurrent() {
         guard let exercise = current, phase == .question else { return }
-        queue[index] = exercise.swapped()
+        queue[index] = exercise.swapped(skills: skills)
     }
 
     func next() {
@@ -117,7 +117,7 @@ final class SessionModel: Identifiable {
         appearances[card.id, default: 0] += 1
         let remaining = queue.count - index - 1
         let position = index + 1 + min(3, remaining)
-        let exercise = Exercise.make(card: card, box: store.box(for: card.id), speechEnabled: speechEnabled)
+        let exercise = Exercise.make(card: card, box: store.box(for: card.id), skills: skills)
         queue.insert(exercise, at: position)
     }
 }

@@ -9,10 +9,16 @@ final class Speaker {
     private lazy var spanishVoice = Self.bestVoice(for: "es")
 
     /// Read every time, so a voice picked in the parent area applies straight away.
-    private var englishVoice: AVSpeechSynthesisVoice? {
+    static var englishVoice: AVSpeechSynthesisVoice? {
+        // An empty identifier ("automatic") doesn't give nil on iPad: it gives the system's default
+        // voice, the Spanish Mónica, which read the English cards. Only take English voices.
         let chosen = UserDefaults.standard.string(forKey: SettingsKey.englishVoice) ?? ""
-        return AVSpeechSynthesisVoice(identifier: chosen) ?? Self.automaticEnglishVoice
+        if !chosen.isEmpty, let voice = AVSpeechSynthesisVoice(identifier: chosen), voice.language.hasPrefix("en") {
+            return voice
+        }
+        return automaticEnglishVoice
     }
+    private var englishVoice: AVSpeechSynthesisVoice? { Self.englishVoice }
     /// Not cached: a voice downloaded while the app is open should be picked up straight away.
     static var automaticEnglishVoice: AVSpeechSynthesisVoice? { bestVoice(for: "en") }
 

@@ -60,18 +60,52 @@ struct LadderTests {
     @Test func boxSelectsExercise() {
         let sentence = Curriculum.noNo[0]
         let word = Curriculum.ae[0]
-        #expect(Exercise.make(card: sentence, box: 0, speechEnabled: true).kind == .listenChoose)
-        #expect(Exercise.make(card: sentence, box: 1, speechEnabled: true).kind == .sayIt)
-        #expect(Exercise.make(card: sentence, box: 1, speechEnabled: false).kind == .repair)
-        #expect(Exercise.make(card: sentence, box: 3, speechEnabled: true).kind == .build)
-        #expect(Exercise.make(card: sentence, box: 6, speechEnabled: true).kind == .paper)
-        #expect(Exercise.make(card: word, box: 2, speechEnabled: true).kind == .spellTiles)
-        #expect(Exercise.make(card: word, box: 4, speechEnabled: true).autoplay == false)
+        #expect(Exercise.make(card: sentence, box: 0, skills: .all).kind == .listenChoose)
+        #expect(Exercise.make(card: sentence, box: 1, skills: .all).kind == .sayIt)
+        #expect(Exercise.make(card: sentence, box: 3, skills: .all).kind == .build)
+        #expect(Exercise.make(card: sentence, box: 6, skills: .all).kind == .paper)
+        #expect(Exercise.make(card: word, box: 2, skills: .all).kind == .spellTiles)
+        #expect(Exercise.make(card: word, box: 4, skills: .all).autoplay == false)
+    }
+
+    @Test func turnedOffSkillsAreReplacedByTheNearestRung() {
+        let sentence = Curriculum.noNo[0]
+        let word = Curriculum.ae[0]
+        var skills = SkillLevels()
+        skills[.speaking] = .never
+        #expect(Exercise.make(card: sentence, box: 1, skills: skills).kind == .listenChoose)
+        skills[.listening] = .never
+        #expect(Exercise.make(card: sentence, box: 0, skills: skills).kind == .repair)
+        #expect(Exercise.make(card: word, box: 1, skills: skills).kind == .spellTiles)
+        // Every skill off: the ladder is used as it is.
+        skills[.reading] = .never
+        skills[.writing] = .never
+        #expect(Exercise.make(card: sentence, box: 3, skills: skills).kind == .build)
+    }
+
+    @Test func lessAppearsHalfTheTimeAndPrefersNormalSkills() {
+        let sentence = Curriculum.noNo[0]
+        var skills = SkillLevels()
+        skills[.listening] = .less
+        skills[.speaking] = .less
+        #expect(Exercise.make(card: sentence, box: 0, skills: skills, roll: 0.2).kind == .listenChoose)
+        // Speaking (rung 1) loses the roll: listening is also "less", so reading (rung 2) wins.
+        #expect(Exercise.make(card: sentence, box: 1, skills: skills, roll: 0.7).kind == .repair)
+    }
+
+    @Test func legacySpeechSwitchMigrates() throws {
+        let defaults = try #require(UserDefaults(suiteName: "skills-test"))
+        defaults.removePersistentDomain(forName: "skills-test")
+        defaults.set(false, forKey: SettingsKey.speechEnabled)
+        SkillLevels.migrateLegacy(defaults)
+        #expect(SkillLevels.current(defaults)[.speaking] == .never)
+        #expect(SkillLevels.current(defaults)[.writing] == .normal)
+        #expect(defaults.object(forKey: SettingsKey.speechEnabled) == nil)
     }
 
     @Test func skippedSpeakingBecomesAnotherExercise() {
         for card in [Curriculum.noNo[0], Curriculum.ae[0]] {
-            let speaking = Exercise.make(card: card, box: 1, speechEnabled: true)
+            let speaking = Exercise.make(card: card, box: 1, skills: .all)
             let kinds = Set((0..<40).map { _ in speaking.swapped() }.map { swapped in
                 #expect(swapped.card == card)
                 return swapped.kind
