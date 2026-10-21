@@ -4,12 +4,13 @@ import SwiftUI
 struct ExerciseView: View {
     let exercise: Exercise
     let onAnswer: (ExerciseResult) -> Void
+    var onSkip: () -> Void = {}
 
     var body: some View {
         Group {
             switch exercise.kind {
             case .listenChoose: ListenChooseView(exercise: exercise, onAnswer: onAnswer)
-            case .sayIt: SayItView(exercise: exercise, onAnswer: onAnswer)
+            case .sayIt: SayItView(exercise: exercise, onAnswer: onAnswer, onSkip: onSkip)
             case .build: BuildView(exercise: exercise, repair: false, onAnswer: onAnswer)
             case .repair: BuildView(exercise: exercise, repair: true, onAnswer: onAnswer)
             case .spellTiles: SpellView(exercise: exercise, keyboard: false, onAnswer: onAnswer)

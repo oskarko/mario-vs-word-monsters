@@ -5,6 +5,7 @@ import SwiftUI
 struct SayItView: View {
     let exercise: Exercise
     let onAnswer: (ExerciseResult) -> Void
+    let onSkip: () -> Void
 
     @State private var listener = SpeechListener()
     @State private var attempts = 0
@@ -125,10 +126,11 @@ struct SayItView: View {
         }
     }
 
+    /// Skipping doesn't count as an answer: the card comes back as another kind of exercise.
     private func skip() {
         timeout?.cancel()
         listener.stop()
         done = true
-        onAnswer(ExerciseResult(correct: nil, given: nil))
+        onSkip()
     }
 }

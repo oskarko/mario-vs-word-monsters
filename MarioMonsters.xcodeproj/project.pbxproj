@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		006EA7C1EED56A86A85425EB /* MonsterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A638FE3D000181571AF83A57 /* MonsterView.swift */; };
 		0140BD2D73DF540D2692B7A5 /* SpellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008D48338828EE53955DF2DA /* SpellView.swift */; };
+		0DD2B5588C27FAA17971F076 /* VoiceDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6E248722FF7EBC8DC98E2 /* VoiceDiagnostics.swift */; };
 		10623EC2BAC2F57AF0B4BEAF /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F3DBCD9F53F6A5F880CC2D /* SessionView.swift */; };
 		143811E5652B65D970BDFBF5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA7C65299E28A2AE28A505C /* HomeView.swift */; };
 		1CEBD47DCDC780011D3311E7 /* SpeechListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64321B77EDD65763120B334C /* SpeechListener.swift */; };
@@ -82,6 +83,7 @@
 		B0DF5647FFEB4A2838723458 /* Speaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speaker.swift; sourceTree = "<group>"; };
 		D05100AD5C73261879A92078 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		E3C2DE1D7FD3A7534E5F9981 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		E5F6E248722FF7EBC8DC98E2 /* VoiceDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceDiagnostics.swift; sourceTree = "<group>"; };
 		F965CCF2F833C6E77B8984D3 /* Curriculum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curriculum.swift; sourceTree = "<group>"; };
 		FD8923593D7DC0FB1DFF7645 /* PaperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,6 +169,7 @@
 				B0DF5647FFEB4A2838723458 /* Speaker.swift */,
 				64321B77EDD65763120B334C /* SpeechListener.swift */,
 				6570D6D5AC082F5A1862E5FD /* SpokenSpanish.swift */,
+				E5F6E248722FF7EBC8DC98E2 /* VoiceDiagnostics.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				0140BD2D73DF540D2692B7A5 /* SpellView.swift in Sources */,
 				8E5533EE7F64BA6DBFFDF7B1 /* SpokenSpanish.swift in Sources */,
 				91D5DE0041ECE2574B558287 /* Theme.swift in Sources */,
+				0DD2B5588C27FAA17971F076 /* VoiceDiagnostics.swift in Sources */,
 				E0CAF4F9A062F391D06B4A98 /* VoiceSetupView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,7 +402,8 @@
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Mario usa el micrófono para decir las frases en inglés en voz alta.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "El reconocimiento de voz comprueba que Mario pronuncia bien la frase. Funciona en el propio dispositivo.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -542,7 +547,8 @@
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Mario usa el micrófono para decir las frases en inglés en voz alta.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "El reconocimiento de voz comprueba que Mario pronuncia bien la frase. Funciona en el propio dispositivo.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

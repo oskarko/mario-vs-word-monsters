@@ -78,7 +78,7 @@ final class Speaker {
     private func speak(_ text: String, voice: AVSpeechSynthesisVoice?, rate: Float) {
         stop()
         Self.activatePlayback()
-        synthesizer.speak(Self.utterance(text, voice: voice, rate: rate))
+        synthesizer.speak(Self.utterance(text, voice: voice, rate: rate, english: true))
     }
 
     private func speakSlow(_ text: String) {
@@ -86,7 +86,7 @@ final class Speaker {
         Self.activatePlayback()
         let current = generation
         scheduledSlow = false
-        let utterance = Self.utterance(text, voice: englishVoice, rate: rate)
+        let utterance = Self.utterance(text, voice: englishVoice, rate: rate, english: true)
         renderer.write(utterance, toBufferCallback: Self.makeBufferCallback { [weak self] box in
             self?.schedule(box.buffer, generation: current)
         })
@@ -109,17 +109,23 @@ final class Speaker {
         if !engine.isRunning {
             do { try engine.start() } catch { return }
         }
+        if !scheduledSlow, let silence = AVAudioPCMBuffer(pcmFormat: buffer.format, frameCapacity: AVAudioFrameCount(buffer.format.sampleRate * Self.leadIn)) {
+            silence.frameLength = silence.frameCapacity
+            if let samples = silence.floatChannelData?[0] { samples.update(repeating: 0, count: Int(silence.frameLength)) }
+            player.scheduleBuffer(silence)
+        }
         scheduledSlow = true
         player.scheduleBuffer(buffer)
         if !player.isPlaying { player.play() }
     }
 
-    private static func utterance(_ text: String, voice: AVSpeechSynthesisVoice?, rate: Float) -> AVSpeechUtterance {
-        let utterance = AVSpeechUtterance(string: text)
+    private static func utterance(_ text: String, voice: AVSpeechSynthesisVoice?, rate: Float, english: Bool = false) -> AVSpeechUtterance {
+        let utterance = english ? AVSpeechUtterance(attributedString: pronounced(text)) : AVSpeechUtterance(string: text)
         utterance.voice = voice
         utterance.rate = rate
         utterance.pitchMultiplier = 1.05
         utterance.postUtteranceDelay = 0.05
+        if english { utterance.preUtteranceDelay = leadIn }
         return utterance
     }
 
@@ -129,11 +135,32 @@ final class Speaker {
         return bare == "I" ? "eye" : text
     }
 
+    /// Single-word cards the voices guess wrong when there is no sentence around them
+    /// (on iPad "you" came out as "niu", even with Serena), pinned with their IPA pronunciation.
+    nonisolated static let pronunciations: [String: String] = ["you": "ˈjuː"]
+
+    nonisolated static func pronounced(_ text: String) -> NSAttributedString {
+        let result = NSMutableAttributedString(string: text)
+        let bare = text.trimmingCharacters(in: .whitespacesAndNewlines.union(.punctuationCharacters))
+        if let ipa = pronunciations[bare.lowercased()] {
+            let range = (text as NSString).range(of: bare)
+            result.addAttribute(NSAttributedString.Key(AVSpeechSynthesisIPANotationAttribute), value: ipa, range: range)
+        }
+        return result
+    }
+
+    /// Switching back from the microphone's record mode reroutes the audio, and on iPad that
+    /// swallowed the start of the next word ("you" came out as "niu"). Only switch when needed,
+    /// and give the route a moment (see `leadIn`) before the first sound.
     static func activatePlayback() {
         let session = AVAudioSession.sharedInstance()
-        try? session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
+        if session.category != .playback || session.mode != .spokenAudio {
+            try? session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
+        }
         try? session.setActive(true)
     }
+
+    private static let leadIn: TimeInterval = 0.15
 
     /// Real voices for a language ("en", "es"), clearest first. A woman's voice comes first so the
     /// English cards sound like the Spanish help (the iPad's only built-in British voice is a man's,

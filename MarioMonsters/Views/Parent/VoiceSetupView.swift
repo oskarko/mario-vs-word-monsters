@@ -50,15 +50,12 @@ struct VoiceSetupView: View {
                             if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
                         }
                         .buttonStyle(ChunkyButtonStyle(color: Theme.good))
-                        HStack(spacing: 18) {
-                            Button("Ya la he descargado") { ready = Speaker.hasClearEnglishVoice }
-                                .buttonStyle(ChunkyButtonStyle())
-                            Button("No volver a mostrar") {
-                                dismissedForever = true
-                                dismiss()
-                            }
-                            .font(Theme.body(16))
+                        Button("No volver a mostrar") {
+                            dismissedForever = true
+                            dismiss()
                         }
+                        .font(Theme.body(16))
+                        .frame(maxWidth: .infinity)
                     }
                 }
                 .foregroundStyle(Theme.ink)
@@ -67,8 +64,8 @@ struct VoiceSetupView: View {
             }
             .background(Theme.background.ignoresSafeArea())
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(ready ? "Listo" : "Ahora no") { dismiss() }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Cerrar", systemImage: "xmark") { dismiss() }
                 }
             }
         }

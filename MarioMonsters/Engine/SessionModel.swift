@@ -83,6 +83,12 @@ final class SessionModel: Identifiable {
         phase = .feedback(result)
     }
 
+    /// Swaps the current card for another kind of exercise without counting an answer.
+    func skipCurrent() {
+        guard let exercise = current, phase == .question else { return }
+        queue[index] = exercise.swapped()
+    }
+
     func next() {
         guard case .feedback = phase else { return }
         index += 1

@@ -1,3 +1,4 @@
+import AVFoundation
 import Foundation
 import Testing
 @testable import MarioMonsters
@@ -66,6 +67,18 @@ struct LadderTests {
         #expect(Exercise.make(card: sentence, box: 6, speechEnabled: true).kind == .paper)
         #expect(Exercise.make(card: word, box: 2, speechEnabled: true).kind == .spellTiles)
         #expect(Exercise.make(card: word, box: 4, speechEnabled: true).autoplay == false)
+    }
+
+    @Test func skippedSpeakingBecomesAnotherExercise() {
+        for card in [Curriculum.noNo[0], Curriculum.ae[0]] {
+            let speaking = Exercise.make(card: card, box: 1, speechEnabled: true)
+            let kinds = Set((0..<40).map { _ in speaking.swapped() }.map { swapped in
+                #expect(swapped.card == card)
+                return swapped.kind
+            })
+            #expect(!kinds.contains(.sayIt))
+            #expect(kinds.count > 1)
+        }
     }
 }
 
@@ -250,6 +263,9 @@ struct SpeechLeniencyTests {
     @Test func aLoneIIsSpokenAsAWord() {
         #expect(Speaker.spokenEnglish("I") == "eye")
         #expect(Speaker.spokenEnglish("I am happy.") == "I am happy.")
+        let you = Speaker.pronounced("you")
+        #expect(you.attribute(NSAttributedString.Key(AVSpeechSynthesisIPANotationAttribute), at: 0, effectiveRange: nil) as? String == "ˈjuː")
+        #expect(Speaker.pronounced("Have you got a dog?").length == 19)
     }
 }
 

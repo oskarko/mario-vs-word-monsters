@@ -32,6 +32,13 @@ struct Exercise: Identifiable, Equatable {
         let ladder = card.kind == .sentence ? sentenceLadder : wordLadder
         return Exercise(card: card, kind: ladder[rung], autoplay: rung < 4)
     }
+
+    /// The same card as a different, randomly chosen exercise (used when speaking is skipped).
+    func swapped() -> Exercise {
+        let ladder = card.kind == .sentence ? Self.sentenceLadder : Self.wordLadder
+        let kinds = Set(ladder).subtracting([kind, .sayIt])
+        return Exercise(card: card, kind: kinds.randomElement() ?? .listenChoose, autoplay: autoplay)
+    }
 }
 
 struct ExerciseResult: Equatable {
