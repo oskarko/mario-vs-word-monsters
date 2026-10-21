@@ -1,3 +1,4 @@
+import AVFoundation
 import SwiftData
 import SwiftUI
 
@@ -216,10 +217,12 @@ struct ParentSettingsView: View {
     @AppStorage(SettingsKey.speechRate) private var speechRate = SettingsKey.defaultSpeechRate
     @AppStorage(SettingsKey.speechEnabled) private var speechEnabled = true
     @AppStorage(SettingsKey.spanishVoiceHelp) private var spanishVoiceHelp = true
+    @AppStorage(SettingsKey.englishVoice) private var englishVoice = ""
     @AppStorage(SettingsKey.sessionLength) private var sessionLength = 10
     @AppStorage(SettingsKey.parentPIN) private var pin = ""
     @AppStorage(SettingsKey.enabledMonsters) private var enabledRaw = MonsterSelection.defaultRaw
     @State private var confirmReset = false
+    private let voices = Speaker.voices(for: "en")
 
     var body: some View {
         Form {
@@ -231,7 +234,12 @@ struct ParentSettingsView: View {
             } footer: {
                 Text("10 tarjetas son unos 8–12 minutos. Mejor poco y todos los días que mucho de golpe.")
             }
-            Section("Voz") {
+            Section {
+                Picker("Voz en inglés", selection: $englishVoice) {
+                    Text("Automática (\(Speaker.automaticEnglishVoice.map(Self.label) ?? "—"))").tag("")
+                    ForEach(voices, id: \.identifier) { Text(Self.label($0)).tag($0.identifier) }
+                }
+                .onChange(of: englishVoice) { Speaker.shared.english("She has got curly hair.") }
                 VStack(alignment: .leading) {
                     Text("Velocidad del inglés")
                     Slider(value: $speechRate, in: 0.3...0.55)
@@ -239,6 +247,10 @@ struct ParentSettingsView: View {
                 Button("Probar voz") { Speaker.shared.english("She has got curly hair.") }
                 Toggle("Ejercicio «Dilo» con micrófono", isOn: $speechEnabled)
                 Toggle("Ánimos en español en voz alta", isOn: $spanishVoiceHelp)
+            } header: {
+                Text("Voz")
+            } footer: {
+                Text("Para una voz más clara, descarga una voz «mejorada» en Ajustes del iPhone/iPad → Accesibilidad → Contenido leído → Voces → Inglés (por ejemplo Serena o Kate, de Reino Unido). Después elígela aquí o déjala en Automática.")
             }
             Section {
                 NavigationLink {
@@ -260,6 +272,16 @@ struct ParentSettingsView: View {
         } message: {
             Text("No se puede deshacer.")
         }
+    }
+
+    private static func label(_ voice: AVSpeechSynthesisVoice) -> String {
+        let country = Locale(identifier: "es_ES").localizedString(forRegionCode: String(voice.language.suffix(2))) ?? voice.language
+        let quality = switch voice.quality {
+        case .premium: " · premium"
+        case .enhanced: " · mejorada"
+        default: ""
+        }
+        return "\(voice.name) (\(country))\(quality)"
     }
 }
 

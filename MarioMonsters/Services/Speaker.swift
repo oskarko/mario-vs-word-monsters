@@ -6,8 +6,14 @@ final class Speaker {
     static let shared = Speaker()
 
     private let synthesizer = AVSpeechSynthesizer()
-    private lazy var englishVoice = Self.bestVoice(for: "en-GB")
-    private lazy var spanishVoice = Self.bestVoice(for: "es-ES")
+    private lazy var spanishVoice = Self.bestVoice(for: "es")
+
+    /// Read every time, so a voice picked in the parent area applies straight away.
+    private var englishVoice: AVSpeechSynthesisVoice? {
+        let chosen = UserDefaults.standard.string(forKey: SettingsKey.englishVoice) ?? ""
+        return AVSpeechSynthesisVoice(identifier: chosen) ?? Self.automaticEnglishVoice
+    }
+    static let automaticEnglishVoice = bestVoice(for: "en")
 
     // Slow mode renders the speech to audio and time-stretches it, because the higher-quality
     // voices largely ignore `AVSpeechUtterance.rate`, so a lower rate alone sounded identical.
@@ -125,9 +131,28 @@ final class Speaker {
         try? session.setActive(true)
     }
 
+    /// Real voices for a language ("en", "es"), clearest first. A woman's voice comes first so the
+    /// English cards sound like the Spanish help (the iPad's only built-in British voice is a man's,
+    /// Daniel, and hard to follow); then downloaded enhanced/premium quality; then the clearest
+    /// accents for a Spanish child (British, then American: Samantha beats Karen or Moira).
+    static func voices(for language: String) -> [AVSpeechSynthesisVoice] {
+        let accents = language == "en" ? ["en-US", "en-GB"] : ["es-MX", "es-ES"]
+        func rank(_ voice: AVSpeechSynthesisVoice) -> (Int, Int, Int) {
+            (voice.gender == .female ? 1 : 0, voice.quality.rawValue, accents.firstIndex(of: voice.language) ?? -1)
+        }
+        return AVSpeechSynthesisVoice.speechVoices()
+            .filter { $0.language.hasPrefix(language + "-") && !isNovelty($0) }
+            .sorted { rank($0) > rank($1) }
+    }
+
+    /// The joke voices (Albert, Bubbles, Grandpa, Eddy…) are never a good choice for a child learning.
+    private static func isNovelty(_ voice: AVSpeechSynthesisVoice) -> Bool {
+        voice.identifier.contains("eloquence") || voice.identifier.contains("speech.synthesis.voice")
+            || voice.voiceTraits.contains(.isNoveltyVoice) || voice.voiceTraits.contains(.isPersonalVoice)
+    }
+
     private static func bestVoice(for language: String) -> AVSpeechSynthesisVoice? {
-        let voices = AVSpeechSynthesisVoice.speechVoices().filter { $0.language == language }
-        return voices.max { $0.quality.rawValue < $1.quality.rawValue } ?? AVSpeechSynthesisVoice(language: language)
+        voices(for: language).first ?? AVSpeechSynthesisVoice(language: language == "en" ? "en-GB" : "es-ES")
     }
 
     /// Rendered buffers arrive on a background thread; they are copied to mono float and handed

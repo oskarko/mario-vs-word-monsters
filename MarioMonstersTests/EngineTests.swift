@@ -252,3 +252,14 @@ struct SpeechLeniencyTests {
         #expect(Speaker.spokenEnglish("I am happy.") == "I am happy.")
     }
 }
+
+@MainActor
+struct VoiceChoiceTests {
+    @Test func prefersAClearWomansVoiceAndSkipsNoveltyVoices() {
+        let voices = Speaker.voices(for: "en")
+        #expect(voices.allSatisfy { $0.language.hasPrefix("en-") && !$0.identifier.contains("eloquence") })
+        if voices.contains(where: { $0.gender == .female }) {
+            #expect(voices.first?.gender == .female)
+        }
+    }
+}

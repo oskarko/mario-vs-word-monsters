@@ -8,6 +8,8 @@ enum SettingsKey {
     static let sessionLength = "sessionLength"
     static let parentPIN = "parentPIN"
     static let enabledMonsters = "enabledMonsters"
+    /// Identifier of the English voice chosen in the parent area; empty means automatic.
+    static let englishVoice = "englishVoice"
 
     static let defaultSpeechRate = 0.42
 }
