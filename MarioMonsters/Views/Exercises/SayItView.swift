@@ -15,6 +15,11 @@ struct SayItView: View {
     @State private var finishing = false
     /// The best score heard during this try: the recognizer sometimes revises a good guess into a worse one.
     @State private var bestScore = 0.0
+    /// The reading that gave `bestScore`. The recognizer's top guess can be different ("but I said"
+    /// while another reading was "bracelet"), so this is what is shown, not the top guess.
+    @State private var bestHeard = ""
+
+    private var heard: String { bestHeard.isEmpty ? listener.transcript : bestHeard }
     /// Delayed steps check this, so one left over from the previous try can't end a new one.
     @State private var tryNumber = 0
 
@@ -26,8 +31,8 @@ struct SayItView: View {
             InstructionView(text: "Lee la frase y dila en voz alta.")
             PromptCard(card: exercise.card, showsEnglish: true)
 
-            if !listener.transcript.isEmpty {
-                Text("«\(listener.transcript)»")
+            if !heard.isEmpty {
+                Text("«\(heard)»")
                     .font(Theme.body(18))
                     .foregroundStyle(Theme.ink.opacity(0.7))
                     .multilineTextAlignment(.center)
@@ -55,7 +60,13 @@ struct SayItView: View {
                 .disabled(done)
         }
         .onChange(of: listener.alternatives) { _, texts in
-            bestScore = max(bestScore, AnswerChecker.speechScore(transcripts: texts, target: exercise.card.english))
+            for text in texts {
+                let score = AnswerChecker.speechScore(transcript: text, target: exercise.card.english)
+                if score > bestScore {
+                    bestScore = score
+                    bestHeard = text
+                }
+            }
             // Only stop early once every word is heard, and leave a moment for the end of the sentence.
             guard listener.state == .listening, !finishing, bestScore >= 1 else { return }
             finishing = true
@@ -80,6 +91,7 @@ struct SayItView: View {
         message = nil
         finishing = false
         bestScore = 0
+        bestHeard = ""
         Task {
             guard await listener.requestAccess() else {
                 message = "No puedo usar el micrófono. Dilo en voz alta igualmente y pulsa Saltar."
@@ -125,13 +137,13 @@ struct SayItView: View {
         let score = max(bestScore, AnswerChecker.speechScore(transcripts: listener.alternatives, target: exercise.card.english))
         if score >= Self.passScore {
             done = true
-            onAnswer(ExerciseResult(correct: true, given: listener.transcript))
+            onAnswer(ExerciseResult(correct: true, given: heard))
             return
         }
         attempts += 1
         if attempts >= 2 {
             done = true
-            onAnswer(ExerciseResult(correct: nil, given: listener.transcript))
+            onAnswer(ExerciseResult(correct: nil, given: heard))
         } else {
             message = "¡Casi! Escúchala otra vez y vuelve a intentarlo."
             Speaker.shared.english(exercise.card.english, slow: true)
