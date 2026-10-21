@@ -58,7 +58,7 @@
 		1ECEFA9035139FA91EC2BD6F /* VoiceSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSetupView.swift; sourceTree = "<group>"; };
 		236C0429A118BEF3D71E1028 /* MarioMonstersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarioMonstersApp.swift; sourceTree = "<group>"; };
 		24AC1E95C84E72FDA5A8F82B /* BuildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildView.swift; sourceTree = "<group>"; };
-		2C097C7ADB0C1CE03EECD3B6 /* MarioMonsters.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MarioMonsters.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C097C7ADB0C1CE03EECD3B6 /* MarioMonsters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarioMonsters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32F3DBCD9F53F6A5F880CC2D /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
 		3AB5E068105FF6DC6F838764 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		4C4A823E2157F1EA06EAFB1A /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
@@ -261,8 +261,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 2600;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = E08747EE7299D64A8CDBD3C5 /* Build configuration list for PBXProject "MarioMonsters" */;
 			developmentRegion = en;
@@ -392,6 +390,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 934NVR3K3Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Mario vs 👾";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -537,6 +536,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 934NVR3K3Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Mario vs 👾";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";

@@ -15,6 +15,8 @@ struct SayItView: View {
     @State private var finishing = false
     /// The best score heard during this try: the recognizer sometimes revises a good guess into a worse one.
     @State private var bestScore = 0.0
+    /// Delayed steps check this, so one left over from the previous try can't end a new one.
+    @State private var tryNumber = 0
 
     /// About two thirds of the words: 2 of 3, 4 of 5, 6 of 8. The written rungs check the details.
     private static let passScore = 0.65
@@ -57,9 +59,10 @@ struct SayItView: View {
             // Only stop early once every word is heard, and leave a moment for the end of the sentence.
             guard listener.state == .listening, !finishing, bestScore >= 1 else { return }
             finishing = true
+            let current = tryNumber
             Task {
                 try? await Task.sleep(for: .milliseconds(600))
-                finishListening()
+                if current == tryNumber { finishListening() }
             }
         }
         .onChange(of: listener.state) { old, new in
@@ -73,6 +76,7 @@ struct SayItView: View {
 
     private func startListening() {
         Speaker.shared.stop()
+        tryNumber += 1
         message = nil
         finishing = false
         bestScore = 0
@@ -101,9 +105,10 @@ struct SayItView: View {
         guard listener.state == .listening else { return }
         finishing = true
         listener.finishAudio()
+        let current = tryNumber
         Task {
             try? await Task.sleep(for: .milliseconds(1500))
-            if listener.state == .listening { listener.stop() }
+            if current == tryNumber, listener.state == .listening { listener.stop() }
         }
     }
 

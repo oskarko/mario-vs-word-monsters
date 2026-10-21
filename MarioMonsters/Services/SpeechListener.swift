@@ -19,6 +19,8 @@ final class SpeechListener {
     private var engine: AVAudioEngine?
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
+    /// Callbacks from an earlier try (a cancelled task reports late) must not stop the current one.
+    private var generation = 0
     private let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-GB"))
 
     func requestAccess() async -> Bool {
@@ -60,8 +62,9 @@ final class SpeechListener {
 
             self.engine = engine
             self.request = request
+            let current = generation
             self.task = recognizer.recognitionTask(with: request, resultHandler: Self.makeHandler { [weak self] texts, isFinal in
-                guard let self else { return }
+                guard let self, current == self.generation else { return }
                 if let text = texts.first {
                     self.transcript = text
                     self.alternatives = texts
@@ -85,6 +88,7 @@ final class SpeechListener {
 
     func stop() {
         let wasActive = engine != nil || task != nil
+        generation += 1
         finishAudio()
         task?.cancel()
         request = nil

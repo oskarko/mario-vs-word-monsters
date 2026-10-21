@@ -135,16 +135,18 @@ final class Speaker {
         return bare == "I" ? "eye" : text
     }
 
-    /// Single-word cards the voices guess wrong when there is no sentence around them
-    /// (on iPad "you" came out as "niu", even with Serena), pinned with their IPA pronunciation.
-    nonisolated static let pronunciations: [String: String] = ["you": "ˈjuː"]
+    /// Words the voices get wrong, pinned with their IPA pronunciation wherever they appear:
+    /// "you" alone came out as "niu" on iPad, and "necklace" as "neck-lace" (it is /ˈnekləs/).
+    nonisolated static let pronunciations: [String: String] = ["you": "juː", "necklace": "ˈnɛkləs"]
 
     nonisolated static func pronounced(_ text: String) -> NSAttributedString {
         let result = NSMutableAttributedString(string: text)
-        let bare = text.trimmingCharacters(in: .whitespacesAndNewlines.union(.punctuationCharacters))
-        if let ipa = pronunciations[bare.lowercased()] {
-            let range = (text as NSString).range(of: bare)
-            result.addAttribute(NSAttributedString.Key(AVSpeechSynthesisIPANotationAttribute), value: ipa, range: range)
+        let key = NSAttributedString.Key(AVSpeechSynthesisIPANotationAttribute)
+        let whole = NSRange(text.startIndex..., in: text)
+        (text as NSString).enumerateSubstrings(in: whole, options: .byWords) { word, range, _, _ in
+            if let word, let ipa = pronunciations[word.lowercased()] {
+                result.addAttribute(key, value: ipa, range: range)
+            }
         }
         return result
     }
