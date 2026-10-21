@@ -3,10 +3,6 @@ import SwiftUI
 
 @main
 struct MarioMonstersApp: App {
-    #if DEBUG
-    init() { VoiceDiagnostics.runIfRequested() }
-    #endif
-
     var body: some Scene {
         WindowGroup {
             HomeView()
