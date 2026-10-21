@@ -13,6 +13,8 @@ final class SpeechListener {
 
     private(set) var state: State = .idle
     private(set) var transcript = ""
+    /// Every reading the recognizer considered (best first); a child's accent often lands on the second one.
+    private(set) var alternatives: [String] = []
 
     private var engine: AVAudioEngine?
     private var request: SFSpeechAudioBufferRecognitionRequest?
@@ -27,6 +29,7 @@ final class SpeechListener {
     func start(hint: String) {
         stop()
         transcript = ""
+        alternatives = []
         guard let recognizer, recognizer.isAvailable else {
             state = .unavailable
             return
@@ -38,7 +41,8 @@ final class SpeechListener {
 
             let request = SFSpeechAudioBufferRecognitionRequest()
             request.shouldReportPartialResults = true
-            request.contextualStrings = AnswerChecker.tokens(hint)
+            request.contextualStrings = [hint] + AnswerChecker.tokens(hint)
+            request.addsPunctuation = false
             if recognizer.supportsOnDeviceRecognition {
                 request.requiresOnDeviceRecognition = true
             }
@@ -56,9 +60,12 @@ final class SpeechListener {
 
             self.engine = engine
             self.request = request
-            self.task = recognizer.recognitionTask(with: request, resultHandler: Self.makeHandler { [weak self] text, isFinal in
+            self.task = recognizer.recognitionTask(with: request, resultHandler: Self.makeHandler { [weak self] texts, isFinal in
                 guard let self else { return }
-                if let text { self.transcript = text }
+                if let text = texts.first {
+                    self.transcript = text
+                    self.alternatives = texts
+                }
                 if isFinal { self.stop() }
             })
             state = .listening
@@ -100,12 +107,12 @@ final class SpeechListener {
     }
 
     nonisolated private static func makeHandler(
-        _ update: @escaping @Sendable @MainActor (String?, Bool) -> Void
+        _ update: @escaping @Sendable @MainActor ([String], Bool) -> Void
     ) -> (SFSpeechRecognitionResult?, (any Error)?) -> Void {
         { result, error in
-            let text = result?.bestTranscription.formattedString
+            let texts = result?.transcriptions.map(\.formattedString) ?? []
             let isFinal = (result?.isFinal ?? false) || error != nil
-            Task { @MainActor in update(text, isFinal) }
+            Task { @MainActor in update(texts, isFinal) }
         }
     }
 }

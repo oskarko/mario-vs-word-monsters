@@ -12,8 +12,11 @@ struct SayItView: View {
     @State private var done = false
     @State private var timeout: Task<Void, Never>?
     @State private var finishing = false
+    /// The best score heard during this try: the recognizer sometimes revises a good guess into a worse one.
+    @State private var bestScore = 0.0
 
-    private static let passScore = 0.7
+    /// About two thirds of the words: 2 of 3, 4 of 5, 6 of 8. The written rungs check the details.
+    private static let passScore = 0.65
 
     var body: some View {
         VStack(spacing: 18) {
@@ -48,10 +51,10 @@ struct SayItView: View {
                 .foregroundStyle(Theme.ink.opacity(0.5))
                 .disabled(done)
         }
-        .onChange(of: listener.transcript) { _, text in
+        .onChange(of: listener.alternatives) { _, texts in
+            bestScore = max(bestScore, AnswerChecker.speechScore(transcripts: texts, target: exercise.card.english))
             // Only stop early once every word is heard, and leave a moment for the end of the sentence.
-            guard listener.state == .listening, !finishing,
-                  AnswerChecker.speechScore(transcript: text, target: exercise.card.english) >= 1 else { return }
+            guard listener.state == .listening, !finishing, bestScore >= 1 else { return }
             finishing = true
             Task {
                 try? await Task.sleep(for: .milliseconds(600))
@@ -71,6 +74,7 @@ struct SayItView: View {
         Speaker.shared.stop()
         message = nil
         finishing = false
+        bestScore = 0
         Task {
             guard await listener.requestAccess() else {
                 message = "No puedo usar el micrófono. Dilo en voz alta igualmente y pulsa Saltar."
@@ -105,7 +109,7 @@ struct SayItView: View {
     private func evaluate() {
         guard !done else { return }
         finishing = false
-        let score = AnswerChecker.speechScore(transcript: listener.transcript, target: exercise.card.english)
+        let score = max(bestScore, AnswerChecker.speechScore(transcripts: listener.alternatives, target: exercise.card.english))
         if score >= Self.passScore {
             done = true
             onAnswer(ExerciseResult(correct: true, given: listener.transcript))

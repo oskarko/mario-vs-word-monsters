@@ -53,6 +53,8 @@ enum AnswerChecker {
     }
 
     /// Fraction of the target's words found, in order, in the transcript (0…1).
+    /// Lenient on purpose: an 8-year-old's accent and the recognizer's guesses shouldn't fail a
+    /// sentence he said well, so words that sound alike or are one or two letters off count.
     static func speechScore(transcript: String, target: String) -> Double {
         let said = words(transcript)
         let wanted = words(target)
@@ -60,12 +62,59 @@ enum AnswerChecker {
         var index = said.startIndex
         var hits = 0
         for word in wanted {
-            if let found = said[index...].firstIndex(of: word) {
+            if let found = said[index...].firstIndex(where: { soundsAlike($0, word) }) {
                 hits += 1
                 index = said.index(after: found)
             }
         }
         return Double(hits) / Double(wanted.count)
+    }
+
+    /// Best score over all the recognizer's alternative readings.
+    static func speechScore(transcripts: [String], target: String) -> Double {
+        transcripts.map { speechScore(transcript: $0, target: target) }.max() ?? 0
+    }
+
+    private static let homophones: [[String]] = [
+        ["i", "eye", "aye", "ai", "hi"], ["to", "two", "too"], ["there", "their", "they're"],
+        ["hear", "here"], ["for", "four"], ["son", "sun"], ["eight", "ate"], ["right", "write"],
+        ["no", "know"], ["wear", "where"], ["see", "sea"], ["by", "buy", "bye"], ["which", "witch"],
+        ["whose", "who's"], ["new", "knew"], ["one", "won"], ["hour", "our"], ["meet", "meat"],
+        ["blue", "blew"], ["hair", "hare"], ["night", "knight"], ["week", "weak"], ["pair", "pear"], ["its", "it's"],
+    ]
+
+    static func soundsAlike(_ said: String, _ wanted: String) -> Bool {
+        if said == wanted || homophones.contains(where: { $0.contains(said) && $0.contains(wanted) }) { return true }
+        let a = soundKey(said), b = soundKey(wanted)
+        if a == b { return true }
+        let shortest = min(said.count, wanted.count)
+        guard shortest >= 4 else { return false }
+        return distance(a, b) <= (shortest >= 7 ? 2 : 1)
+    }
+
+    /// Rough spelling-to-sound key: ph → f, ck → k, wh → w, kn → n, silent final e, no double letters.
+    private static func soundKey(_ word: String) -> String {
+        var key = word.replacingOccurrences(of: "'", with: "")
+        for (from, to) in [("ph", "f"), ("ck", "k"), ("wh", "w"), ("kn", "n"), ("gh", "")] {
+            key = key.replacingOccurrences(of: from, with: to)
+        }
+        if key.count > 3, key.hasSuffix("e") { key.removeLast() }
+        var result = ""
+        for character in key where character != result.last { result.append(character) }
+        return result
+    }
+
+    private static func distance(_ a: String, _ b: String) -> Int {
+        let a = Array(a), b = Array(b)
+        var previous = Array(0...b.count)
+        for i in 1...max(a.count, 1) where !a.isEmpty {
+            var current = [i] + Array(repeating: 0, count: b.count)
+            for j in stride(from: 1, through: b.count, by: 1) {
+                current[j] = min(previous[j] + 1, current[j - 1] + 1, previous[j - 1] + (a[i - 1] == b[j - 1] ? 0 : 1))
+            }
+            previous = current
+        }
+        return previous[b.count]
     }
 
     static func key(_ token: String) -> String {

@@ -53,9 +53,6 @@ extension MonsterID {
     }
 
     var index: Int { MonsterID.allCases.firstIndex(of: self) ?? 0 }
-
-    /// The original monsters have hand-made looks; the rest share generated ones plus their emblem.
-    var isOriginal: Bool { [.ae, .noNo, .jumper, .snake, .traps].contains(self) }
 }
 
 /// Chunky "3D" button: the face sinks onto its shadow when pressed.

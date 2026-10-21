@@ -182,8 +182,8 @@ struct ContentTests {
     @Test func everyMonsterHasInfo() {
         for monster in MonsterID.allCases {
             #expect(!monster.info.name.isEmpty)
-            #expect(!monster.info.emblem.isEmpty)
         }
+        #expect(MonsterID.allCases.compactMap(\.info.emblem).sorted() == ["'s", "got", "×2"])
     }
 
     @Test func streakCountsConsecutiveDays() {
@@ -229,5 +229,26 @@ struct SpokenSpanishTests {
             #expect(!spoken.isEmpty)
             #expect(!spoken.contains(where: { "→=≠«»·".contains($0) }), "\(spoken)")
         }
+    }
+}
+
+struct SpeechLeniencyTests {
+    @Test func accentAndRecognizerSlipsStillCount() {
+        #expect(AnswerChecker.speechScore(transcript: "eye have got a dog", target: "I have got a dog.") == 1)
+        #expect(AnswerChecker.speechScore(transcript: "she has got curli hair", target: "She has got curly hair.") == 1)
+        #expect(AnswerChecker.speechScore(transcript: "my favourit colour is green", target: "My favourite colour is green.") == 1)
+        #expect(AnswerChecker.speechScore(transcript: "the dolfin is swimming", target: "The dolphin is swimming.") == 1)
+        #expect(AnswerChecker.speechScore(transcripts: ["is he happy", "is she happy"], target: "Is she happy?") == 1)
+    }
+
+    @Test func differentWordsDoNotCount() {
+        #expect(!AnswerChecker.soundsAlike("cat", "car"))
+        #expect(!AnswerChecker.soundsAlike("she", "he"))
+        #expect(AnswerChecker.speechScore(transcript: "i like football", target: "She has got curly hair.") == 0)
+    }
+
+    @Test func aLoneIIsSpokenAsAWord() {
+        #expect(Speaker.spokenEnglish("I") == "eye")
+        #expect(Speaker.spokenEnglish("I am happy.") == "I am happy.")
     }
 }

@@ -62,13 +62,13 @@ In total there are 31 monsters and about 550 cards.
   <img src="docs/monsters.png" width="760" alt="All 31 word monsters, grouped into typical errors, Movers grammar and Movers vocabulary">
 </p>
 
-Every monster is drawn in code with SwiftUI shapes, so each one has its own colour, body, ears or horns, eyes and mouth, plus an emblem on its belly. Because they aren't bitmaps they can react during a session: they bounce when idle, wince when the child gets a card right, laugh when the child falls into the trap and end up with X eyes once they're defeated. The green one-eyed Monstruo Ae, the first monster, is also the app icon (green is Mario's favourite colour).
+Every monster is drawn in code with SwiftUI shapes, so each one has its own colour, body, ears or horns, eyes and mouth. Their bellies are left clean, except for the three monsters whose whole lesson fits in a word: *got*, *'s* and *×2*. Because they aren't bitmaps they can react during a session: they bounce when idle, wince when the child gets a card right, laugh when the child falls into the trap and end up with X eyes once they're defeated. The green one-eyed Monstruo Ae, the first monster, is also the app icon (green is Mario's favourite colour).
 
 ## How it teaches
 
 - **A ladder from strength to weakness.** Each card climbs from what the child already does well (listening and speaking) to what they need to learn (writing):
   1. Listen and choose the spelling.
-  2. Say it aloud (on-device speech recognition).
+  2. Say it aloud (on-device speech recognition). It is forgiving on purpose: it accepts a child's accent, words that sound alike (*I/eye*, *hair/hare*) and small slips, because the written steps are where spelling is checked.
   3. Repair the monster's sentence.
   4. Build it with tiles, or spell it with a big, simple keyboard.
   5. **Write it on paper** and self-check with a "detective" checklist.
@@ -152,14 +152,14 @@ Cometía unos pocos errores de raíz, siempre los mismos. Cada uno es un monstru
 
 Estos seis vienen activados por defecto, y cualquiera se puede desactivar.
 
-Los monstruos están dibujados con SwiftUI, sin imágenes: son peluditos y simpáticos, cada uno con su color, sus orejas o cuernos, sus ojos y su emblema en la barriga. Se mueven durante la sesión: se ríen cuando el niño cae en la trampa, se quejan cuando acierta y acaban con los ojos en X cuando los derrota. El Monstruo Ae es verde campo, el color favorito de Mario, y es también el icono de la app.
+Los monstruos están dibujados con SwiftUI, sin imágenes: son peluditos y simpáticos, cada uno con su color, sus orejas o cuernos, sus ojos y la barriga limpia (solo llevan palabra *got*, *'s* y *×2*, porque su lección cabe en ella). Se mueven durante la sesión: se ríen cuando el niño cae en la trampa, se quejan cuando acierta y acaban con los ojos en X cuando los derrota. El Monstruo Ae es verde campo, el color favorito de Mario, y es también el icono de la app.
 
 ### Todo el nivel Movers
 La app incluye además **toda la gramática y el vocabulario de Movers**: 10 monstruos de gramática (pasado, comparativos, preposiciones, modales, posesivos, plurales irregulares…) y 15 de vocabulario (animales, ropa, comida, números, profesiones…). Vienen **desactivados**. En *Ajustes → Monstruos* puedes activarlos uno a uno, por grupos o todos a la vez, según los vayan dando en clase. Si desactivas uno, su progreso no se pierde.
 
 ### Cómo enseña
 - **Externalizar el error.** El fallo es «el monstruo intenta engañarte», no «lo haces mal». El niño caza el error en vez de esconderlo.
-- **Escalera por tarjeta:** oír y elegir → decirlo en voz alta → arreglar la frase → construirla con fichas o deletrearla → **escribirla en papel** y revisarla en «modo detective». No exige usar el teclado del móvil.
+- **Escalera por tarjeta:** oír y elegir → decirlo en voz alta (el micrófono es tolerante con el acento de un niño) → arreglar la frase → construirla con fichas o deletrearla → **escribirla en papel** y revisarla en «modo detective». No exige usar el teclado del móvil.
 - **Opciones trampa con sentido:** son sus propios errores, así que tiene que rechazarlos a conciencia.
 - **Repetición espaciada:** lo que falla vuelve enseguida y al día siguiente. Lo que domina vuelve a los 2, 4, 8 y 21 días.
 - **Corrección inmediata**, explicada en español y con voz.

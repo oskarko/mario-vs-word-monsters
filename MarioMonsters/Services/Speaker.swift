@@ -33,6 +33,7 @@ final class Speaker {
     }
 
     func english(_ text: String, slow: Bool = false) {
+        let text = Self.spokenEnglish(text)
         if slow {
             speakSlow(text)
         } else {
@@ -110,6 +111,12 @@ final class Speaker {
         utterance.pitchMultiplier = 1.05
         utterance.postUtteranceDelay = 0.05
         return utterance
+    }
+
+    /// A lone "I" is read as the letter ("capital I"); "eye" sounds exactly like the word.
+    nonisolated static func spokenEnglish(_ text: String) -> String {
+        let bare = text.trimmingCharacters(in: .whitespacesAndNewlines.union(.punctuationCharacters))
+        return bare == "I" ? "eye" : text
     }
 
     static func activatePlayback() {

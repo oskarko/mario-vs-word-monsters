@@ -99,8 +99,8 @@ struct MonsterView: View {
     private var belly: some View {
         ZStack {
             Ellipse().fill(color.mix(with: .white, by: 0.45))
-            if !monster.isOriginal {
-                Text(monster.info.emblem)
+            if let emblem = monster.info.emblem {
+                Text(emblem)
                     .font(.system(size: 16 * unit, weight: .black, design: .rounded))
                     .foregroundStyle(Theme.ink.opacity(0.7))
                     .lineLimit(1)
