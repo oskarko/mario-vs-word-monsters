@@ -7,5 +7,6 @@ swiftc -o "$OUT/icon" \
   Scripts/main.swift \
   MarioMonsters/Views/Components/MonsterView.swift \
   MarioMonsters/Model/Content.swift \
+  MarioMonsters/Model/MoversMonsters.swift \
   MarioMonsters/Views/Components/Theme.swift
 "$OUT/icon" MarioMonsters/Assets.xcassets/AppIcon.appiconset/AppIcon.png

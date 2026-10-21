@@ -17,15 +17,38 @@ enum Theme {
 extension MonsterID {
     var color: Color {
         switch self {
-        case .ae: Color(red: 0.55, green: 0.36, blue: 0.95)
+        case .ae: Color(red: 0.38, green: 0.72, blue: 0.24) // verde campo, Mario's favourite
         case .noNo: Color(red: 0.95, green: 0.35, blue: 0.35)
         case .jumper: Color(red: 0.20, green: 0.70, blue: 0.85)
-        case .snake: Color(red: 0.30, green: 0.75, blue: 0.35)
+        case .snake: Color(red: 0.55, green: 0.36, blue: 0.95)
         case .traps: Color(red: 1.00, green: 0.58, blue: 0.20)
         case .gotLost: Color(red: 0.95, green: 0.45, blue: 0.70)
-        default:
-            // Movers packs: spread hues evenly so neighbours in the grid look different.
-            Color(hue: (Double(index) * 0.137).truncatingRemainder(dividingBy: 1), saturation: 0.55, brightness: 0.88)
+        // Movers packs: one distinct colour each, so no two monsters look alike.
+        case .mixer: Color(red: 0.16, green: 0.66, blue: 0.62)
+        case .yesterday: Color(red: 0.84, green: 0.64, blue: 0.16)
+        case .bigger: Color(red: 0.48, green: 0.55, blue: 0.95)
+        case .nowNow: Color(red: 1.00, green: 0.50, blue: 0.42)
+        case .octopus: Color(red: 0.75, green: 0.55, blue: 0.90)
+        case .apostrophe: Color(red: 0.80, green: 0.42, blue: 0.30)
+        case .plurals: Color(red: 0.40, green: 0.72, blue: 0.98)
+        case .bossy: Color(red: 0.85, green: 0.25, blue: 0.50)
+        case .snail: Color(red: 0.55, green: 0.72, blue: 0.55)
+        case .linker: Color(red: 1.00, green: 0.76, blue: 0.56)
+        case .animals: Color(red: 0.78, green: 0.55, blue: 0.35)
+        case .body: Color(red: 0.62, green: 0.36, blue: 0.62)
+        case .clothes: Color(red: 0.45, green: 0.88, blue: 0.75)
+        case .family: Color(red: 0.98, green: 0.86, blue: 0.36)
+        case .food: Color(red: 0.98, green: 0.68, blue: 0.58)
+        case .home: Color(red: 0.30, green: 0.42, blue: 0.78)
+        case .school: Color(red: 0.62, green: 0.64, blue: 0.26)
+        case .sports: Color(red: 0.88, green: 0.38, blue: 0.85)
+        case .town: Color(red: 0.52, green: 0.60, blue: 0.70)
+        case .nature: Color(red: 0.22, green: 0.56, blue: 0.36)
+        case .transport: Color(red: 0.88, green: 0.78, blue: 0.60)
+        case .time: Color(red: 0.42, green: 0.32, blue: 0.76)
+        case .jobs: Color(red: 0.15, green: 0.52, blue: 0.86)
+        case .numbers: Color(red: 0.12, green: 0.42, blue: 0.52)
+        case .feelings: Color(red: 0.90, green: 0.66, blue: 0.96)
         }
     }
 

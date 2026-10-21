@@ -28,7 +28,7 @@ Lots of bilingual and bilingual-school kids in Spain **speak English fluently bu
 Flashcard and Duolingo-style apps don't attack those specific habits. **Mario vs. the Word Monsters** does. It was built for one real 8-year-old, from his own marked worksheets. Every wrong option in the app is a mistake he actually made.
 
 <p align="center">
-  <img src="docs/screenshots/home.png" width="200" alt="Home screen with the five word monsters">
+  <img src="docs/screenshots/home.png" width="200" alt="Home screen: today's mission and the word monsters">
   <img src="docs/screenshots/listen.png" width="200" alt="Listen and choose the correct spelling">
   <img src="docs/screenshots/build.png" width="200" alt="Build the English sentence with word tiles">
   <img src="docs/screenshots/paper.png" width="200" alt="Write it on paper and check with the detective list">
@@ -40,10 +40,10 @@ Each typical error made by Spanish speakers is a monster. Kids **hunt the mistak
 
 | Monster | Error pattern | Real examples |
 |---|---|---|
-| 🟣 **Monstruo Ae** | Phonetic spelling | `Ae` → I, `hear` → hair, `monay` → money |
+| 🟢 **Monstruo Ae** | Phonetic spelling | `Ae` → I, `hear` → hair, `monay` → money |
 | 🔴 **El No-No** | Negating with Spanish *no* | `I no late` → I'm not late |
 | 🔵 **Verbo Saltarín** | Questions without inversion | `You are happy?` → Are you happy? |
-| 🟢 **Serpiente de la S** | Pronouns & 3rd-person **-s** | `she play` → she plays |
+| 🟣 **Serpiente de la S** | Pronouns & 3rd-person **-s** | `she play` → she plays |
 | 🟠 **Trampas Españolas** | Word-for-word calques | `I have 10 years` → I am 10 years old |
 | 🩷 **El Got Perdido** | Dropping *got* from *have got* | `I have a dog` → I have got a dog |
 
@@ -57,6 +57,12 @@ The app also covers the **full Cambridge Movers (A1) level**, so other children 
 - **Movers vocabulary** (15 monsters): animals, body and health, clothes, family, food, home, school, sports, town, weather and nature, transport, time, jobs, numbers and feelings. Each word comes with the misspellings a Spanish speaker typically makes (`fourty`, `ninty`, `dolfin`).
 
 In total there are 31 monsters and about 550 cards.
+
+<p align="center">
+  <img src="docs/monsters.png" width="760" alt="All 31 word monsters, grouped into typical errors, Movers grammar and Movers vocabulary">
+</p>
+
+Every monster is drawn in code with SwiftUI shapes, so each one has its own colour, body, ears or horns, eyes and mouth, plus an emblem on its belly. Because they aren't bitmaps they can react during a session: they bounce when idle, wince when the child gets a card right, laugh when the child falls into the trap and end up with X eyes once they're defeated. The green one-eyed Monstruo Ae, the first monster, is also the app icon (green is Mario's favourite colour).
 
 ## How it teaches
 
@@ -120,7 +126,7 @@ MarioMonsters/
 ├── Services/    Text-to-speech, speech recognition, settings
 └── Views/       Home, session, exercises, monsters, parent area
 MarioMonstersTests/   Engine tests
-Scripts/              App icon renderer
+Scripts/              App icon renderer (draws the icon from MonsterView)
 ```
 
 ## License
@@ -145,6 +151,8 @@ Cometía unos pocos errores de raíz, siempre los mismos. Cada uno es un monstru
 - **El Got Perdido:** se come el «got» de «have got».
 
 Estos seis vienen activados por defecto, y cualquiera se puede desactivar.
+
+Los monstruos están dibujados con SwiftUI, sin imágenes: son peluditos y simpáticos, cada uno con su color, sus orejas o cuernos, sus ojos y su emblema en la barriga. Se mueven durante la sesión: se ríen cuando el niño cae en la trampa, se quejan cuando acierta y acaban con los ojos en X cuando los derrota. El Monstruo Ae es verde campo, el color favorito de Mario, y es también el icono de la app.
 
 ### Todo el nivel Movers
 La app incluye además **toda la gramática y el vocabulario de Movers**: 10 monstruos de gramática (pasado, comparativos, preposiciones, modales, posesivos, plurales irregulares…) y 15 de vocabulario (animales, ropa, comida, números, profesiones…). Vienen **desactivados**. En *Ajustes → Monstruos* puedes activarlos uno a uno, por grupos o todos a la vez, según los vayan dando en clase. Si desactivas uno, su progreso no se pierde.
