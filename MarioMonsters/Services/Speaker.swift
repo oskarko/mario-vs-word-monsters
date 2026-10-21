@@ -120,7 +120,7 @@ final class Speaker {
     }
 
     private static func utterance(_ text: String, voice: AVSpeechSynthesisVoice?, rate: Float, english: Bool = false) -> AVSpeechUtterance {
-        let utterance = english ? AVSpeechUtterance(attributedString: pronounced(text)) : AVSpeechUtterance(string: text)
+        let utterance = AVSpeechUtterance(string: text)
         utterance.voice = voice
         utterance.rate = rate
         utterance.pitchMultiplier = 1.05
@@ -130,26 +130,25 @@ final class Speaker {
     }
 
     /// A lone "I" is read as the letter ("capital I"); "eye" sounds exactly like the word.
+    /// Other words the voices get wrong are respelled the way they sound: the IPA attribute
+    /// garbled them on iPad ("necklace" came out as "kilss"), plain spelling is reliable.
     nonisolated static func spokenEnglish(_ text: String) -> String {
         let bare = text.trimmingCharacters(in: .whitespacesAndNewlines.union(.punctuationCharacters))
-        return bare == "I" ? "eye" : text
-    }
-
-    /// Words the voices get wrong, pinned with their IPA pronunciation wherever they appear:
-    /// "you" alone came out as "niu" on iPad, and "necklace" as "neck-lace" (it is /ˈnekləs/).
-    nonisolated static let pronunciations: [String: String] = ["you": "juː", "necklace": "ˈnɛkləs"]
-
-    nonisolated static func pronounced(_ text: String) -> NSAttributedString {
-        let result = NSMutableAttributedString(string: text)
-        let key = NSAttributedString.Key(AVSpeechSynthesisIPANotationAttribute)
+        if bare == "I" { return "eye" }
+        var result = text
         let whole = NSRange(text.startIndex..., in: text)
+        var ranges: [(Range<String.Index>, String)] = []
         (text as NSString).enumerateSubstrings(in: whole, options: .byWords) { word, range, _, _ in
-            if let word, let ipa = pronunciations[word.lowercased()] {
-                result.addAttribute(key, value: ipa, range: range)
+            if let word, let spoken = respellings[word.lowercased()], let range = Range(range, in: text) {
+                ranges.append((range, word.first?.isUppercase == true ? spoken.capitalized : spoken))
             }
         }
+        for (range, spoken) in ranges.reversed() { result.replaceSubrange(range, with: spoken) }
         return result
     }
+
+    /// "necklace" is /ˈnekləs/, but the voices read "neck-lace".
+    nonisolated static let respellings: [String: String] = ["necklace": "neckless"]
 
     /// Switching back from the microphone's record mode reroutes the audio, and on iPad that
     /// swallowed the start of the next word ("you" came out as "niu"). Only switch when needed,

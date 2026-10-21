@@ -260,16 +260,12 @@ struct SpeechLeniencyTests {
         #expect(AnswerChecker.speechScore(transcript: "i like football", target: "She has got curly hair.") == 0)
     }
 
-    @Test func aLoneIIsSpokenAsAWord() {
+    @Test func trickyWordsAreSpokenRight() {
         #expect(Speaker.spokenEnglish("I") == "eye")
         #expect(Speaker.spokenEnglish("I am happy.") == "I am happy.")
-        let you = Speaker.pronounced("you")
-        #expect(you.attribute(NSAttributedString.Key(AVSpeechSynthesisIPANotationAttribute), at: 0, effectiveRange: nil) as? String == "juː")
-        #expect(Speaker.pronounced("Have you got a dog?").length == 19)
-        let sentence = Speaker.pronounced("She hasn't got a necklace.")
-        let start = ("She hasn't got a necklace." as NSString).range(of: "necklace").location
-        #expect(sentence.attribute(NSAttributedString.Key(AVSpeechSynthesisIPANotationAttribute), at: start, effectiveRange: nil) as? String == "ˈnɛkləs")
-        #expect(sentence.attribute(NSAttributedString.Key(AVSpeechSynthesisIPANotationAttribute), at: 0, effectiveRange: nil) == nil)
+        #expect(Speaker.spokenEnglish("you") == "you")
+        #expect(Speaker.spokenEnglish("necklace") == "neckless")
+        #expect(Speaker.spokenEnglish("She hasn't got a necklace.") == "She hasn't got a neckless.")
     }
 }
 
