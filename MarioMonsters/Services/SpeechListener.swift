@@ -1,5 +1,6 @@
 import AVFoundation
 import Observation
+import OSLog
 import Speech
 
 /// On-device English speech recognition for the "Dilo" exercise.
@@ -15,6 +16,8 @@ final class SpeechListener {
     private(set) var transcript = ""
     /// Every reading the recognizer considered (best first); a child's accent often lands on the second one.
     private(set) var alternatives: [String] = []
+    /// The try ended with an error before anything was heard (not a pronunciation problem).
+    private(set) var failed = false
 
     private var engine: AVAudioEngine?
     private var request: SFSpeechAudioBufferRecognitionRequest?
@@ -22,6 +25,10 @@ final class SpeechListener {
     /// Callbacks from an earlier try (a cancelled task reports late) must not stop the current one.
     private var generation = 0
     private let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-GB"))
+    private let log = Logger(subsystem: "com.oscargarrucho.MarioMonsters", category: "speech")
+    /// On-device recognition can report support and then fail at once (it needs Dictation turned on);
+    /// after that, use Apple's server for the rest of the run.
+    private static var onDeviceFailed = false
 
     func requestAccess() async -> Bool {
         guard await Self.authorizeSpeech() else { return false }
@@ -32,6 +39,7 @@ final class SpeechListener {
         stop()
         transcript = ""
         alternatives = []
+        failed = false
         guard let recognizer, recognizer.isAvailable else {
             state = .unavailable
             return
@@ -41,41 +49,62 @@ final class SpeechListener {
             try session.setCategory(.playAndRecord, mode: .measurement, options: [.defaultToSpeaker, .duckOthers])
             try session.setActive(true, options: .notifyOthersOnDeactivation)
 
-            let request = SFSpeechAudioBufferRecognitionRequest()
-            request.shouldReportPartialResults = true
-            request.contextualStrings = [hint] + AnswerChecker.tokens(hint)
-            request.addsPunctuation = false
-            if recognizer.supportsOnDeviceRecognition {
-                request.requiresOnDeviceRecognition = true
-            }
-
             let engine = AVAudioEngine()
-            let input = engine.inputNode
-            let format = input.outputFormat(forBus: 0)
+            let format = engine.inputNode.outputFormat(forBus: 0)
             guard format.sampleRate > 0, format.channelCount > 0 else {
                 state = .unavailable
                 return
             }
-            input.installTap(onBus: 0, bufferSize: 1024, format: format, block: Self.makeTap(request))
+            self.engine = engine
+            recognize(hint: hint, with: recognizer, onDevice: recognizer.supportsOnDeviceRecognition && !Self.onDeviceFailed)
             engine.prepare()
             try engine.start()
-
-            self.engine = engine
-            self.request = request
-            let current = generation
-            self.task = recognizer.recognitionTask(with: request, resultHandler: Self.makeHandler { [weak self] texts, isFinal in
-                guard let self, current == self.generation else { return }
-                if let text = texts.first {
-                    self.transcript = text
-                    self.alternatives = texts
-                }
-                if isFinal { self.stop() }
-            })
+            note("Listening (route=\(session.currentRoute.inputs.map(\.portName)))")
             state = .listening
         } catch {
+            note("Could not start listening: \(error)")
             stop()
             state = .unavailable
         }
+    }
+
+    /// Feeds the microphone into a new recognition request. If on-device recognition fails before
+    /// hearing anything — "Siri and Dictation are disabled" on Mario's iPad — the same try carries
+    /// on with Apple's server, so the first tap of the mic still works.
+    private func recognize(hint: String, with recognizer: SFSpeechRecognizer, onDevice: Bool) {
+        guard let engine else { return }
+        let request = SFSpeechAudioBufferRecognitionRequest()
+        request.shouldReportPartialResults = true
+        request.contextualStrings = [hint] + AnswerChecker.tokens(hint)
+        request.addsPunctuation = false
+        request.requiresOnDeviceRecognition = onDevice
+        engine.inputNode.removeTap(onBus: 0)
+        engine.inputNode.installTap(onBus: 0, bufferSize: 1024, format: engine.inputNode.outputFormat(forBus: 0), block: Self.makeTap(request))
+        self.request = request
+
+        let current = generation
+        task = recognizer.recognitionTask(with: request, resultHandler: Self.makeHandler { [weak self] texts, isFinal, error in
+            guard let self, current == self.generation else { return }
+            if let text = texts.first {
+                self.transcript = text
+                self.alternatives = texts
+            }
+            if let error {
+                self.note("Recognition error (onDevice=\(onDevice)): \(error)")
+                if self.alternatives.isEmpty {
+                    if onDevice, self.engine != nil {
+                        Self.onDeviceFailed = true
+                        self.generation += 1
+                        self.task?.cancel()
+                        self.request?.endAudio()
+                        self.recognize(hint: hint, with: recognizer, onDevice: false)
+                        return
+                    }
+                    self.failed = true
+                }
+            }
+            if isFinal || error != nil { self.stop() }
+        })
     }
 
     /// Stops the microphone but lets the recognizer finish the last words; the final result then calls `stop()`.
@@ -98,6 +127,14 @@ final class SpeechListener {
         if wasActive { Speaker.activatePlayback() }
     }
 
+    /// Logged, and echoed to the console in debug builds so a device run shows it.
+    private func note(_ message: String) {
+        log.notice("\(message, privacy: .public)")
+        #if DEBUG
+        print("SPEECH \(message)")
+        #endif
+    }
+
     nonisolated private static func authorizeSpeech() async -> Bool {
         await withCheckedContinuation { continuation in
             SFSpeechRecognizer.requestAuthorization { status in
@@ -111,12 +148,13 @@ final class SpeechListener {
     }
 
     nonisolated private static func makeHandler(
-        _ update: @escaping @Sendable @MainActor ([String], Bool) -> Void
+        _ update: @escaping @Sendable @MainActor ([String], Bool, String?) -> Void
     ) -> (SFSpeechRecognitionResult?, (any Error)?) -> Void {
         { result, error in
             let texts = result?.transcriptions.map(\.formattedString) ?? []
-            let isFinal = (result?.isFinal ?? false) || error != nil
-            Task { @MainActor in update(texts, isFinal) }
+            let isFinal = result?.isFinal ?? false
+            let message = error.map { "\($0)" }
+            Task { @MainActor in update(texts, isFinal, message) }
         }
     }
 }

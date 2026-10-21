@@ -2,6 +2,7 @@ import SwiftUI
 
 /// Rungs 3–4 for words: spell letter by letter. First with the word's own letters as tiles,
 /// then with a big simplified keyboard (only a few keys, so it is about spelling, not typing).
+/// Either way a used letter leaves the bank and only comes back when it is taken out of the word.
 struct SpellView: View {
     let exercise: Exercise
     let keyboard: Bool
@@ -15,7 +16,7 @@ struct SpellView: View {
     /// One slot per character of the target; spaces are fixed gaps.
     @State private var slots: [Letter?] = []
     @State private var bank: [Letter] = []
-    @State private var keys: [Character] = []
+    @State private var keys: [Letter] = []
     @State private var ready = false
     @State private var checked = false
 
@@ -43,6 +44,7 @@ struct SpellView: View {
             CheckButton(enabled: isComplete && !checked) { check() }
         }
         .animation(.spring(duration: 0.25), value: slots)
+        .animation(.spring(duration: 0.25), value: keys)
         .onAppear(perform: setUp)
     }
 
@@ -78,9 +80,9 @@ struct SpellView: View {
     private var keyboardView: some View {
         let columns = [GridItem(.adaptive(minimum: 58, maximum: 80), spacing: 10)]
         return LazyVGrid(columns: columns, spacing: 10) {
-            ForEach(keys, id: \.self) { key in
+            ForEach(keys) { key in
                 Button { type(key) } label: {
-                    Text(String(key)).font(Theme.title(28)).frame(maxWidth: .infinity)
+                    Text(String(key.char)).font(Theme.title(28)).frame(maxWidth: .infinity)
                 }
                 .buttonStyle(ChunkyButtonStyle(color: .white, textColor: Theme.ink))
             }
@@ -99,7 +101,14 @@ struct SpellView: View {
         let extra = TileFactory.distractorLetters(for: exercise.card)
         let letters = target.filter { $0 != " " } + extra
         bank = letters.shuffled().map { Letter(char: $0) }
-        keys = Array(Set(letters)).sorted { String($0).lowercased() == String($1).lowercased() ? $0.isUppercase : String($0).lowercased() < String($1).lowercased() }
+        keys = Self.alphabetical(letters.map { Letter(char: $0) })
+    }
+
+    private static func alphabetical(_ letters: [Letter]) -> [Letter] {
+        letters.sorted { lhs, rhs in
+            let l = String(lhs.char).lowercased(), r = String(rhs.char).lowercased()
+            return l == r ? lhs.char.isUppercase && !rhs.char.isUppercase : l < r
+        }
     }
 
     private var nextEmpty: Int? {
@@ -113,21 +122,26 @@ struct SpellView: View {
         slots[index] = letter
     }
 
-    private func type(_ key: Character) {
+    private func type(_ key: Letter) {
         guard !checked, let index = nextEmpty else { return }
         Haptics.tap()
-        slots[index] = Letter(char: key)
+        keys.removeAll { $0.id == key.id }
+        slots[index] = key
     }
 
     private func backspace() {
         guard !checked, let index = slots.indices.last(where: { slots[$0] != nil }) else { return }
-        slots[index] = nil
+        remove(at: index)
     }
 
     private func remove(at index: Int) {
         guard !checked, let letter = slots[index] else { return }
         slots[index] = nil
-        if !keyboard { bank.append(letter) }
+        if keyboard {
+            keys = Self.alphabetical(keys + [letter])
+        } else {
+            bank.append(letter)
+        }
     }
 
     private func check() {

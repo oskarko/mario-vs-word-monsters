@@ -396,7 +396,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Mario vs 👾";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Mario usa el micrófono para decir las frases en inglés en voz alta.";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "El reconocimiento de voz comprueba que Mario pronuncia bien la frase. Funciona en el propio dispositivo.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "El reconocimiento de voz comprueba que Mario pronuncia bien la frase. Funciona en el propio dispositivo si el Dictado está activado; si no, usa el servicio de Apple.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -541,7 +541,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Mario vs 👾";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Mario usa el micrófono para decir las frases en inglés en voz alta.";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "El reconocimiento de voz comprueba que Mario pronuncia bien la frase. Funciona en el propio dispositivo.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "El reconocimiento de voz comprueba que Mario pronuncia bien la frase. Funciona en el propio dispositivo si el Dictado está activado; si no, usa el servicio de Apple.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";

@@ -115,6 +115,13 @@ struct SayItView: View {
     private func evaluate() {
         guard !done else { return }
         finishing = false
+        // Nothing heard at all is a microphone or recognizer problem, not a bad try: don't count it.
+        if listener.alternatives.allSatisfy(\.isEmpty) {
+            message = listener.failed
+                ? "No he podido escucharte. Pulsa el micro y prueba otra vez."
+                : "No te he oído. Pulsa el micro y habla más fuerte."
+            return
+        }
         let score = max(bestScore, AnswerChecker.speechScore(transcripts: listener.alternatives, target: exercise.card.english))
         if score >= Self.passScore {
             done = true
