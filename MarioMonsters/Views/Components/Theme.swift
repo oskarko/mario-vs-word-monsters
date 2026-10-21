@@ -60,13 +60,14 @@ struct ChunkyButtonStyle: ButtonStyle {
     var color: Color = Theme.neutral
     var textColor: Color = .white
     var font: Font = Theme.body(21)
+    var horizontalPadding: CGFloat = 22
 
     func makeBody(configuration: Configuration) -> some View {
         let pressed = configuration.isPressed
         configuration.label
             .font(font)
             .foregroundStyle(textColor)
-            .padding(.horizontal, 22)
+            .padding(.horizontal, horizontalPadding)
             .padding(.vertical, 14)
             .frame(minHeight: 56)
             .background(

@@ -1,11 +1,15 @@
 import AVFoundation
+import OSLog
 
 /// Text-to-speech: British English for the content, Spanish for help and instructions.
 @MainActor
 final class Speaker {
     static let shared = Speaker()
 
-    private let synthesizer = AVSpeechSynthesizer()
+    /// Rebuilt when it stops making sound (see `sayWatched`).
+    private var synthesizer = AVSpeechSynthesizer()
+    private let watch = StartWatch()
+    private let log = Logger(subsystem: "com.oscargarrucho.MarioMonsters", category: "speaker")
     private lazy var spanishVoice = Self.bestVoice(for: "es")
 
     /// Read every time, so a voice picked in the parent area applies straight away.
@@ -27,7 +31,7 @@ final class Speaker {
 
     // Slow mode renders the speech to audio and time-stretches it, because the higher-quality
     // voices largely ignore `AVSpeechUtterance.rate`, so a lower rate alone sounded identical.
-    private let renderer = AVSpeechSynthesizer()
+    private var renderer = AVSpeechSynthesizer()
     private let engine = AVAudioEngine()
     private let player = AVAudioPlayerNode()
     private let stretch = AVAudioUnitTimePitch()
@@ -41,6 +45,39 @@ final class Speaker {
         stretch.rate = Self.slowFactor
         engine.attach(player)
         engine.attach(stretch)
+        synthesizer.delegate = watch
+        // After a phone call, Siri or a media-services reset the old synthesizers can stay silent for good.
+        NotificationCenter.default.addObserver(forName: AVAudioSession.mediaServicesWereResetNotification, object: nil, queue: .main) { _ in
+            MainActor.assumeIsolated { Speaker.shared.rebuild(reason: "media services reset") }
+        }
+    }
+
+    /// A stuck AVSpeechSynthesizer keeps accepting utterances without a sound, and only a new one
+    /// recovers (Mario lost all audio until the app was restarted). Each time something is said,
+    /// check that it really started; if not, rebuild the synthesizer, reset the session and retry once.
+    private func sayWatched(_ make: @escaping () -> [AVSpeechUtterance]) {
+        let current = generation
+        watch.started = false
+        make().forEach(synthesizer.speak)
+        Task {
+            // Generous: the first sentence with a big enhanced voice takes a moment to load.
+            try? await Task.sleep(for: .seconds(2))
+            guard current == generation, !watch.started else { return }
+            rebuild(reason: "speech didn't start")
+            Self.activatePlayback(reset: true)
+            make().forEach(synthesizer.speak)
+        }
+    }
+
+    private func rebuild(reason: String) {
+        log.error("Rebuilding the speech synthesizers: \(reason, privacy: .public)")
+        stop()
+        synthesizer.delegate = nil
+        synthesizer = AVSpeechSynthesizer()
+        synthesizer.delegate = watch
+        renderer = AVSpeechSynthesizer()
+        engine.stop()
+        connectedFormat = nil
     }
 
     private var rate: Float {
@@ -61,10 +98,13 @@ final class Speaker {
     func spanish(_ text: String) {
         stop()
         Self.activatePlayback()
-        for sentence in SpokenSpanish.sentences(text) {
-            let utterance = Self.utterance(sentence, voice: spanishVoice, rate: 0.45)
-            utterance.postUtteranceDelay = 0.25
-            synthesizer.speak(utterance)
+        let voice = spanishVoice
+        sayWatched {
+            SpokenSpanish.sentences(text).map { sentence in
+                let utterance = Self.utterance(sentence, voice: voice, rate: 0.45)
+                utterance.postUtteranceDelay = 0.25
+                return utterance
+            }
         }
     }
 
@@ -84,7 +124,7 @@ final class Speaker {
     private func speak(_ text: String, voice: AVSpeechSynthesisVoice?, rate: Float) {
         stop()
         Self.activatePlayback()
-        synthesizer.speak(Self.utterance(text, voice: voice, rate: rate, english: true))
+        sayWatched { [Self.utterance(text, voice: voice, rate: rate, english: true)] }
     }
 
     private func speakSlow(_ text: String) {
@@ -159,9 +199,10 @@ final class Speaker {
     /// Switching back from the microphone's record mode reroutes the audio, and on iPad that
     /// swallowed the start of the next word ("you" came out as "niu"). Only switch when needed,
     /// and give the route a moment (see `leadIn`) before the first sound.
-    static func activatePlayback() {
+    static func activatePlayback(reset: Bool = false) {
         let session = AVAudioSession.sharedInstance()
-        if session.category != .playback || session.mode != .spokenAudio {
+        if reset { try? session.setActive(false) }
+        if reset || session.category != .playback || session.mode != .spokenAudio {
             try? session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
         }
         try? session.setActive(true)
@@ -226,6 +267,17 @@ final class Speaker {
             return nil
         }
         return copy
+    }
+}
+
+/// Notes when the synthesizer really starts speaking. Delegate calls may come on any thread.
+private final class StartWatch: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable {
+    @MainActor var started = false
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+        DispatchQueue.main.async {
+            MainActor.assumeIsolated { self.started = true }
+        }
     }
 }
 

@@ -132,6 +132,10 @@ struct FeedbackPanel: View {
     let result: ExerciseResult
     let onContinue: () -> Void
 
+    /// After a mistake Continue waits a few seconds, so Mario reads the correction instead of tapping straight on.
+    @State private var wait = 0
+    private static let mistakeWait = 3
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             switch result.correct {
@@ -173,9 +177,21 @@ struct FeedbackPanel: View {
                 answerRow(Text(card.english).font(Theme.body(20)).foregroundStyle(Theme.ink))
             }
             Button(action: onContinue) {
-                Text("Continuar").frame(maxWidth: .infinity)
+                Text(wait > 0 ? "Lee el error… \(wait)" : "Continuar").frame(maxWidth: .infinity)
+                    .contentTransition(.numericText(countsDown: true))
             }
             .buttonStyle(ChunkyButtonStyle(color: color))
+            .disabled(wait > 0)
+            .opacity(wait > 0 ? 0.5 : 1)
+        }
+        .task {
+            guard result.correct == false else { return }
+            wait = Self.mistakeWait
+            while wait > 0 {
+                try? await Task.sleep(for: .seconds(1))
+                if Task.isCancelled { return }
+                withAnimation { wait -= 1 }
+            }
         }
         .padding(20)
         .readableWidth()

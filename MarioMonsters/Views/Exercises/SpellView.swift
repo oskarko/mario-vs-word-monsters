@@ -19,6 +19,7 @@ struct SpellView: View {
     @State private var keys: [Letter] = []
     @State private var ready = false
     @State private var checked = false
+    @State private var availableWidth: CGFloat = 340
 
     private var target: [Character] { Array(exercise.card.english) }
 
@@ -52,29 +53,49 @@ struct SpellView: View {
         slots.indices.allSatisfy { target[$0] == " " || slots[$0] != nil }
     }
 
+    /// Indices of the target grouped by word, so a word never breaks across two lines.
+    private var words: [[Int]] {
+        var result: [[Int]] = [[]]
+        for index in target.indices {
+            if target[index] == " " { result.append([]) } else { result[result.count - 1].append(index) }
+        }
+        return result.filter { !$0.isEmpty }
+    }
+
+    /// Big slots, shrunk only as much as the longest word needs to fit on one line ("granddaughter").
+    private var slotWidth: CGFloat {
+        let longest = CGFloat(words.map(\.count).max() ?? 1)
+        return min(46, (availableWidth - Self.slotSpacing * (longest - 1)) / longest)
+    }
+
+    private static let slotSpacing: CGFloat = 6
+
     private var slotRow: some View {
-        FlowLayout(spacing: 6) {
-            ForEach(slots.indices, id: \.self) { index in
-                if target[index] == " " {
-                    Color.clear.frame(width: 18, height: 54)
-                } else {
-                    Button { remove(at: index) } label: {
-                        Text(slots[index].map { String($0.char) } ?? " ")
-                            .font(Theme.title(28))
-                            .foregroundStyle(Theme.ink)
-                            .frame(width: 40, height: 54)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .fill(slots[index] == nil ? Color.black.opacity(0.06) : Theme.gold.opacity(0.35))
-                            )
-                            .overlay(alignment: .bottom) {
-                                Capsule().fill(Theme.ink.opacity(0.3)).frame(height: 3).padding(.horizontal, 6)
-                            }
+        let width = slotWidth
+        return FlowLayout(spacing: 20) {
+            ForEach(words, id: \.self) { word in
+                HStack(spacing: Self.slotSpacing) {
+                    ForEach(word, id: \.self) { index in
+                        Button { remove(at: index) } label: {
+                            Text(slots[index].map { String($0.char) } ?? " ")
+                                .font(Theme.title(min(30, width * 0.68)))
+                                .foregroundStyle(Theme.ink)
+                                .frame(width: width, height: 56)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                        .fill(slots[index] == nil ? Color.black.opacity(0.06) : Theme.gold.opacity(0.35))
+                                )
+                                .overlay(alignment: .bottom) {
+                                    Capsule().fill(Theme.ink.opacity(0.3)).frame(height: 3).padding(.horizontal, 6)
+                                }
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
             }
         }
+        .frame(maxWidth: .infinity)
+        .onGeometryChange(for: CGFloat.self, of: \.size.width) { availableWidth = $0 }
     }
 
     private var keyboardView: some View {
@@ -84,12 +105,13 @@ struct SpellView: View {
                 Button { type(key) } label: {
                     Text(String(key.char)).font(Theme.title(28)).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(ChunkyButtonStyle(color: .white, textColor: Theme.ink))
+                // Little side padding: the default 22 pt clipped wide letters like "w" on narrow keys.
+                .buttonStyle(ChunkyButtonStyle(color: .white, textColor: Theme.ink, horizontalPadding: 4))
             }
             Button { backspace() } label: {
                 Image(systemName: "delete.left.fill").font(.system(size: 24, weight: .bold)).frame(maxWidth: .infinity)
             }
-            .buttonStyle(ChunkyButtonStyle(color: Theme.bad))
+            .buttonStyle(ChunkyButtonStyle(color: Theme.bad, horizontalPadding: 4))
             .accessibilityLabel("Borrar")
         }
     }
