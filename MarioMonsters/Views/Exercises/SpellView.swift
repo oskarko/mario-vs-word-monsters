@@ -14,12 +14,24 @@ struct SpellView: View {
     }
 
     /// One slot per character of the target; spaces are fixed gaps.
-    @State private var slots: [Letter?] = []
-    @State private var bank: [Letter] = []
-    @State private var keys: [Letter] = []
-    @State private var ready = false
+    @State private var slots: [Letter?]
+    @State private var bank: [Letter]
+    @State private var keys: [Letter]
     @State private var checked = false
     @State private var availableWidth: CGFloat = 340
+
+    /// Slots and letters exist from the first render: filling them in onAppear left the slot row
+    /// indexing an empty array for one frame, which crashed when Continue brought in a spelling card.
+    init(exercise: Exercise, keyboard: Bool, onAnswer: @escaping (ExerciseResult) -> Void) {
+        self.exercise = exercise
+        self.keyboard = keyboard
+        self.onAnswer = onAnswer
+        let target = Array(exercise.card.english)
+        let letters = target.filter { $0 != " " } + TileFactory.distractorLetters(for: exercise.card)
+        _slots = State(initialValue: Array(repeating: nil, count: target.count))
+        _bank = State(initialValue: letters.shuffled().map { Letter(char: $0) })
+        _keys = State(initialValue: Self.alphabetical(letters.map { Letter(char: $0) }))
+    }
 
     private var target: [Character] { Array(exercise.card.english) }
 
@@ -46,7 +58,6 @@ struct SpellView: View {
         }
         .animation(.spring(duration: 0.25), value: slots)
         .animation(.spring(duration: 0.25), value: keys)
-        .onAppear(perform: setUp)
     }
 
     private var isComplete: Bool {
@@ -114,16 +125,6 @@ struct SpellView: View {
             .buttonStyle(ChunkyButtonStyle(color: Theme.bad, horizontalPadding: 4))
             .accessibilityLabel("Borrar")
         }
-    }
-
-    private func setUp() {
-        guard !ready else { return }
-        ready = true
-        slots = Array(repeating: nil, count: target.count)
-        let extra = TileFactory.distractorLetters(for: exercise.card)
-        let letters = target.filter { $0 != " " } + extra
-        bank = letters.shuffled().map { Letter(char: $0) }
-        keys = Self.alphabetical(letters.map { Letter(char: $0) })
     }
 
     private static func alphabetical(_ letters: [Letter]) -> [Letter] {
