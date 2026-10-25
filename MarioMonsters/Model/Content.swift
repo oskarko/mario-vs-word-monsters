@@ -8,13 +8,15 @@ enum MonsterID: String, CaseIterable, Codable, Identifiable, Sendable {
     case mixer, yesterday, bigger, nowNow, octopus, apostrophe, plurals, bossy, snail, linker
     // Movers vocabulary.
     case animals, body, clothes, family, food, home, school, sports, town, nature, transport, time, jobs, numbers, feelings
+    // Grammar monster added later; declared last so the generated looks of the others stay as they were.
+    case twinTimes
 
     var id: String { rawValue }
 
     var group: MonsterGroup {
         switch self {
         case .ae, .noNo, .jumper, .snake, .traps, .gotLost: .core
-        case .mixer, .yesterday, .bigger, .nowNow, .octopus, .apostrophe, .plurals, .bossy, .snail, .linker: .grammar
+        case .mixer, .yesterday, .bigger, .nowNow, .octopus, .apostrophe, .plurals, .bossy, .snail, .linker, .twinTimes: .grammar
         default: .vocabulary
         }
     }

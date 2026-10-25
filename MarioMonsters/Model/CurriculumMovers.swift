@@ -25,7 +25,7 @@ extension Curriculum {
         s(.gotLost, "I have got a headache.", "Me duele la cabeza.", "🤕", ["I have a headache.", "I have got headache."], tip: "Me duele la cabeza = I have GOT A headache. ¡Con got y con a!"),
     ]
 
-    static let moversGrammar: [Card] = mixer + yesterday + bigger + nowNow + octopus + apostrophe + plurals + bossy + snail + linker
+    static let moversGrammar: [Card] = mixer + yesterday + bigger + nowNow + octopus + apostrophe + plurals + bossy + snail + linker + twinTimes
 
     // MARK: - El Revoltijo: word order
 
@@ -70,6 +70,47 @@ extension Curriculum {
         w(.yesterday, "bought", "compré, compró… (de buy)", "🛍️", ["buyed", "bougth"]),
         w(.yesterday, "saw", "vi, vio… (de see)", "👀", ["seed", "sow"]),
         w(.yesterday, "caught", "cogí, cogió… (de catch)", "🧤", ["catched", "cought"]),
+    ]
+
+    // MARK: - Gemelos Hoy-Ayer: present simple vs past simple
+
+    static let twinTimes: [Card] = [
+        s(.twinTimes, "I go to school every day.", "Voy al colegio todos los días.", "🏫", ["I went to school every day.", "I goes to school every day."], tip: "every day = presente: go. (Ayer sería went.)"),
+        s(.twinTimes, "I went to school yesterday.", "Ayer fui al colegio.", "🎒", ["I go to school yesterday.", "I goed to school yesterday."], tip: "yesterday = pasado: go → went."),
+        s(.twinTimes, "She goes to the park on Saturdays.", "Ella va al parque los sábados.", "🛝", ["She go to the park on Saturdays.", "She went to the park on Saturdays."], tip: "Con she, presente: goes."),
+        s(.twinTimes, "She went to the park last Saturday.", "Ella fue al parque el sábado pasado.", "🌳", ["She goes to the park last Saturday.", "She goed to the park last Saturday."], tip: "last Saturday = pasado: went, y sin s."),
+        s(.twinTimes, "He does his homework after school.", "Él hace los deberes después del cole.", "✏️", ["He do his homework after school.", "He did his homework after school."], tip: "Presente con he: does."),
+        s(.twinTimes, "He did his homework yesterday.", "Él hizo los deberes ayer.", "📒", ["He does his homework yesterday.", "He doed his homework yesterday."], tip: "do en pasado = did (¡sin s, para todos!)."),
+        s(.twinTimes, "Do you like pizza?", "¿Te gusta la pizza?", "🍕", ["Does you like pizza?", "Did you like pizza?"], tip: "Presente con you: Do. (Did preguntaría por el pasado.)"),
+        s(.twinTimes, "Does he like pizza?", "¿Le gusta la pizza a él?", "🍕", ["Do he like pizza?", "Does he likes pizza?"], tip: "Con he/she/it: Does, y el verbo solito: like (sin s)."),
+        s(.twinTimes, "Did you go to the beach?", "¿Fuiste a la playa?", "🏖️", ["Did you went to the beach?", "Do you went to the beach?"], tip: "Con Did, el verbo vuelve a ser normal: Did you GO…?"),
+        s(.twinTimes, "Does she go to the beach?", "¿Va ella a la playa?", "🌊", ["Does she goes to the beach?", "Does she went to the beach?"], tip: "Con Does, el verbo sin s: Does she GO…?"),
+        s(.twinTimes, "I don't like soup.", "No me gusta la sopa.", "🍲", ["I doesn't like soup.", "I didn't likes soup."], tip: "I don't = presente. Detrás, el verbo normal."),
+        s(.twinTimes, "She doesn't like soup.", "A ella no le gusta la sopa.", "🥣", ["She don't like soup.", "She doesn't likes soup."], tip: "Con she: doesn't, y el verbo sin s."),
+        s(.twinTimes, "She didn't like the soup.", "A ella no le gustó la sopa.", "😖", ["She doesn't liked the soup.", "She didn't liked the soup."], tip: "didn't ya es pasado: el verbo se queda normal (like)."),
+        s(.twinTimes, "We didn't go to the zoo.", "No fuimos al zoo.", "🦒", ["We didn't went to the zoo.", "We don't went to the zoo."], tip: "didn't GO, no didn't went."),
+        s(.twinTimes, "My dad watches TV every night.", "Mi padre ve la tele todas las noches.", "📺", ["My dad watch TV every night.", "My dad watched TV every night."], tip: "every night = presente, y con dad (he) lleva es: watches."),
+        s(.twinTimes, "My dad watched TV last night.", "Mi padre vio la tele anoche.", "📡", ["My dad watches TV last night.", "My dad watchd TV last night."], tip: "last night = pasado: watch + ed."),
+        s(.twinTimes, "They eat lunch at one o'clock.", "Ellos comen a la una.", "🍝", ["They ate lunch at one o'clock.", "They eats lunch at one o'clock."], tip: "Presente con they: eat, sin s."),
+        s(.twinTimes, "They ate lunch at home yesterday.", "Ayer comieron en casa.", "🏠", ["They eated lunch at home yesterday.", "They eat lunch at home yesterday."], tip: "eat es rebelde: eat → ate."),
+        s(.twinTimes, "He has a dog.", "Él tiene un perro.", "🐕", ["He have a dog.", "He had a dog."], tip: "Presente con he: has. (had es el pasado.)"),
+        s(.twinTimes, "He had a bike last year.", "Él tuvo una bici el año pasado.", "🚲", ["He has a bike last year.", "He haved a bike last year."], tip: "have → had, para todos."),
+        s(.twinTimes, "Mario plays football on Mondays.", "Mario juega al fútbol los lunes.", "⚽", ["Mario play football on Mondays.", "Mario played football on Mondays."], tip: "Costumbre de siempre: presente, con s para Mario (he)."),
+        s(.twinTimes, "Mario played football yesterday.", "Mario jugó al fútbol ayer.", "🥅", ["Mario plays football yesterday.", "Mario plaied football yesterday."], tip: "play + ed = played (la y se queda)."),
+        s(.twinTimes, "What does she do at weekends?", "¿Qué hace ella los fines de semana?", "🗓️", ["What do she do at weekends?", "What does she does at weekends?"], tip: "Does + verbo solito: What does she DO?"),
+        s(.twinTimes, "What did you do yesterday?", "¿Qué hiciste ayer?", "🤔", ["What did you did yesterday?", "What do you did yesterday?"], tip: "Did + verbo solito: What did you DO?"),
+        s(.twinTimes, "My mum buys bread every morning.", "Mi madre compra pan cada mañana.", "🥖", ["My mum buy bread every morning.", "My mum bought bread every morning."], tip: "Presente con mum (she): buys."),
+        s(.twinTimes, "My mum bought bread this morning.", "Mi madre compró pan esta mañana.", "🍞", ["My mum buyed bread this morning.", "My mum buys bread this morning."], tip: "buy es rebelde: buy → bought."),
+        s(.twinTimes, "We see our friends at school.", "Vemos a nuestros amigos en el cole.", "👫", ["We saw our friends at school.", "We sees our friends at school."], tip: "Presente con we: see, sin s."),
+        s(.twinTimes, "We saw a big whale yesterday.", "Ayer vimos una ballena grande.", "🐳", ["We seed a big whale yesterday.", "We see a big whale yesterday."], tip: "see → saw."),
+        s(.twinTimes, "It rains a lot in winter.", "Llueve mucho en invierno.", "🌧️", ["It rain a lot in winter.", "It rained a lot in winter."], tip: "Con it, presente: rains."),
+        s(.twinTimes, "It rained all day on Sunday.", "Llovió todo el día el domingo.", "☔", ["It rains all day on Sunday.", "It rainned all day on Sunday."], tip: "rain + ed = rained."),
+        w(.twinTimes, "did", "hice, hizo… (de do)", "✅", ["dit", "deed"]),
+        w(.twinTimes, "went", "fui, fue… (de go)", "🚶", ["want", "wend"]),
+        w(.twinTimes, "had", "tuve, tuvo… (de have)", "🎁", ["haved", "hat"]),
+        w(.twinTimes, "came", "vine, vino… (de come)", "👋", ["comed", "kame"]),
+        w(.twinTimes, "took", "cogí, cogió… (de take)", "🤲", ["taked", "tuk"]),
+        w(.twinTimes, "ran", "corrí, corrió… (de run)", "🏃", ["runned", "ram"]),
     ]
 
     // MARK: - Gigante Comparón: comparatives and superlatives

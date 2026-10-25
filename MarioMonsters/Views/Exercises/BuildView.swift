@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Rungs 3–4 "Constrúyelo": put word tiles in order. Distractor tiles are Mario's own
 /// mistakes ("no", "Ae", "the"…), so he has to consciously reject them.
-/// In repair mode the monster's wrong sentence is already placed and Mario fixes it.
+/// In repair mode the monster's wrong sentence is shown above and Mario writes it right.
 struct BuildView: View {
     let exercise: Exercise
     let repair: Bool
@@ -28,9 +28,17 @@ struct BuildView: View {
     var body: some View {
         VStack(spacing: 18) {
             InstructionView(text: repair
-                ? "¡El monstruo lo ha escrito mal! Toca las palabras para quitarlas o ponerlas, o arrástralas para cambiarlas de sitio."
+                ? "¡El monstruo lo ha escrito mal! Escríbelo bien tú: toca las palabras para ponerlas, o arrástralas para cambiarlas de sitio."
                 : "Construye la frase en inglés. Puedes arrastrar las palabras para cambiarlas de sitio.")
             PromptCard(card: card, showsAudio: exercise.autoplay || repair)
+
+            if repair, let wrong = card.wrong.first {
+                Text("El monstruo escribió: \(wrong)")
+                    .font(Theme.body(16))
+                    .foregroundStyle(Theme.ink.opacity(0.6))
+                    .strikethrough(color: .red.opacity(0.6))
+                    .multilineTextAlignment(.center)
+            }
 
             answerArea
 
@@ -111,14 +119,9 @@ struct BuildView: View {
     private func setUp() {
         guard !ready else { return }
         ready = true
-        if repair {
-            let setup = TileFactory.repairSetup(for: card)
-            placed = setup.placed.map { Tile(text: $0) }
-            bank = setup.bank.shuffled().map { Tile(text: $0) }
-        } else {
-            let words = TileFactory.canonicalTokens(card.english) + TileFactory.distractorWords(for: card)
-            bank = words.shuffled().map { Tile(text: $0) }
-        }
+        // Both modes start with every tile loose in the bank, shuffled; the answer box is empty.
+        let words = TileFactory.canonicalTokens(card.english) + TileFactory.distractorWords(for: card)
+        bank = words.shuffled().map { Tile(text: $0) }
     }
 
     private func move(_ tile: Tile, toAnswer: Bool) {

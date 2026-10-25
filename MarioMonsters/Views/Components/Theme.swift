@@ -49,6 +49,7 @@ extension MonsterID {
         case .jobs: Color(red: 0.15, green: 0.52, blue: 0.86)
         case .numbers: Color(red: 0.12, green: 0.42, blue: 0.52)
         case .feelings: Color(red: 0.90, green: 0.66, blue: 0.96)
+        case .twinTimes: Color(red: 0.95, green: 0.42, blue: 0.20)
         }
     }
 

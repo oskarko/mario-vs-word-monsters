@@ -96,6 +96,14 @@ extension MonsterID {
                 taunts: ["¡Pego lo que no va!", "¡Which, who… lo mismo da!", "¡Te pego los dedos! Jejeje"],
                 hits: ["¡Ay! ¡Frases bien pegadas!", "¡Nooo! ¡Who para personas!", "¡Me despego!"]
             )
+        case .twinTimes:
+            MonsterInfo(
+                name: "Gemelos Hoy-Ayer",
+                tagline: "Mezclan el presente y el pasado.",
+                lesson: "Presente: lo que haces siempre. Con he, she o it, el verbo lleva s: she goes, he does. Pasado: lo que ya pasó. El verbo cambia: go, went. Do, did. En las preguntas y en las negativas, Do/Does (presente) o Did (pasado) hacen el trabajo y el verbo queda solito: Does she go? Did she go? She doesn't go. She didn't go.",
+                taunts: ["¡Hoy es ayer y ayer es hoy! Jejeje", "¡Does she went? ¡Mézclalo todo!", "¡Dos tiempos, una sola confusión!"],
+                hits: ["¡Ay! ¡Hoy y ayer, bien separados!", "¡Nooo! ¡Did y does en su sitio!", "¡Mis gemelos se pelean!"]
+            )
         case .animals:
             Self.vocabulary("Monstruo Zoológico", topic: "animales",
                             tip: "Fíjate en las letras que no suenan: wHale, dolPHin. ¡Y en las dobles: raBBit, paRRot, kiTTen!")
